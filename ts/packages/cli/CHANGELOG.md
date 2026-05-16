@@ -1,5 +1,17 @@
 # @composio/cli
 
+## 0.2.31
+
+### Patch Changes
+
+- 5555dee: Refresh the browser fallback approval prompt with the Composio CLI landing page visual style and serve it from the local loopback callback server while continuing to prefer the native macOS sidecar when available.
+- eb51b92: CLI now sends its per-cwd session id as the `x-cli-session-id` header on every request. The backend uses this to tag tool execution logs with `session_info.cli_session_id`, so all tool executions from a single CLI session (one cwd, one user) can be grouped together in the logs UI.
+- 2d52e7f: `composio upgrade` now accepts an optional `<version>` argument so you can install a specific stable release or beta (e.g. `composio upgrade 0.13.1`, `composio upgrade 0.13.1-beta.42`, or the full tag `@composio/cli@0.13.1`). When omitted, the command continues to install the latest release on the chosen channel (`--beta` for prereleases).
+- Updated dependencies [93b67e8]
+- Updated dependencies [1ba66ca]
+  - @composio/core@0.10.1
+  - @composio/cli-local-tools@0.0.5
+
 ## 0.2.30
 
 ### Patch Changes

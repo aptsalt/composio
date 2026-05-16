@@ -1,5 +1,13 @@
 # @composio/cli-local-tools
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [93b67e8]
+- Updated dependencies [1ba66ca]
+  - @composio/core@0.10.1
+
 ## 0.0.4
 
 ### Patch Changes
