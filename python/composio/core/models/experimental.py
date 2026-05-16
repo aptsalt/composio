@@ -34,7 +34,7 @@ from .custom_tool import (
 )
 
 # Server-side 400 message the API uses to reject ACL writes against a
-# PRIVATE connection. Substring-matched in `update_acl` here and in the
+# PRIVATE connection. Substring-matched in `update_sharing` here and in the
 # sibling `link()` / `authorize()` call sites — kept as a single constant
 # so a server-side message tweak only requires one edit.
 ACL_ONLY_FOR_SHARED_ERROR_FRAGMENT = "acl_config_for_shared is only valid on SHARED"
