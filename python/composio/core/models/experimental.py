@@ -8,7 +8,7 @@ releases. Two flavours live here today:
   Implementation details for these still live in :mod:`custom_tool`;
   this module just exposes them on the namespace.
 - Experimental SDK methods that take a Composio client
-  (``composio.experimental.update_acl``).
+  (``composio.experimental.update_sharing``).
 
 Anything new on the ``composio.experimental`` namespace should land here,
 not on the underlying model modules.
@@ -53,38 +53,79 @@ class ExperimentalAPI:
     def __init__(self, client: t.Optional[HttpClient] = None) -> None:
         self._client = client
 
-    def update_acl(
+    def update_sharing(
         self,
         nanoid: str,
         *,
+        account_type: t.Optional[t.Literal["PRIVATE", "SHARED"]] = None,
         allow_all_users: t.Optional[bool] = None,
         allowed_user_ids: t.Optional[t.List[str]] = None,
         not_allowed_user_ids: t.Optional[t.List[str]] = None,
     ) -> connected_account_patch_response.ConnectedAccountPatchResponse:
         """
-        Update the per-user ACL on a SHARED connected account. Experimental —
-        shape may change in future releases.
+        Update the sharing model and/or per-user ACL of a connected account.
+        Experimental — shape may change in future releases.
 
-        Only valid on SHARED connections; raises
-        ``ComposioAclOnlyForSharedError`` on a PRIVATE connection. Omit a
-        parameter to leave it unchanged; pass an empty list to clear an
-        allow/deny list. At least one parameter must be provided.
+        Two knobs in one call:
+
+        - ``account_type`` toggles the sharing model:
+
+          * ``"SHARED"`` promotes a PRIVATE connection to SHARED without
+            re-auth — the stored credentials are reused. Optionally pass
+            ACL fields in the same call to grant initial access atomically.
+          * ``"PRIVATE"`` demotes a SHARED connection back to PRIVATE.
+            Every non-creator ``user_id`` is blocked at the next ACL
+            check, and the stored ACL is cleared atomically. Sending ACL
+            fields in the same call raises
+            ``ComposioAclOnlyForSharedError`` (the demote would overwrite
+            them anyway).
+
+        - ACL fields (``allow_all_users`` / ``allowed_user_ids`` /
+          ``not_allowed_user_ids``) edit the per-user grants on a SHARED
+          connection. PATCH semantics — omit a field to leave it
+          unchanged; pass an empty list to clear an allow/deny list.
+
+        Demotion silently revokes access from everyone the creator
+        previously granted. Confirm the action on the frontend (showing
+        an explicit "you're about to revoke access from N users" prompt)
+        before calling this with ``account_type="PRIVATE"``.
+
+        At least one field must be provided.
 
         :param nanoid: The connected account ID (``ca_xxx``).
+        :param account_type: ``"SHARED"`` to promote (no re-auth needed),
+            ``"PRIVATE"`` to demote and clear the stored ACL. Omit to
+            leave the sharing model unchanged.
         :param allow_all_users: When True, any ``user_id`` may use this
             SHARED connection (subject to the deny list).
-        :param allowed_user_ids: Explicit list of allowed ``user_id`` strings.
-            Pass ``[]`` to clear.
-        :param not_allowed_user_ids: Explicit deny list (wins over allow on
-            conflict). Pass ``[]`` to clear — note that clearing the deny
-            list silently re-grants access to previously-blocked users.
+        :param allowed_user_ids: Explicit list of allowed ``user_id``
+            strings. Pass ``[]`` to clear.
+        :param not_allowed_user_ids: Explicit deny list (wins over allow
+            on conflict). Pass ``[]`` to clear — clearing the deny list
+            silently re-grants access to previously-blocked users.
         :return: Response with ``id``, ``status``, and ``success``.
 
-        Example:
-            composio.experimental.update_acl(
+        Examples::
+
+            # Promote a PRIVATE connection to SHARED and grant access in
+            # one call (no re-auth).
+            composio.experimental.update_sharing(
                 'ca_abc',
+                account_type='SHARED',
                 allow_all_users=True,
                 not_allowed_user_ids=['user_bob'],
+            )
+
+            # Edit ACL on a connection that's already SHARED.
+            composio.experimental.update_sharing(
+                'ca_abc',
+                allowed_user_ids=['user_alice'],
+            )
+
+            # Demote — revokes all non-creator access; ACL cleared atomically.
+            composio.experimental.update_sharing(
+                'ca_abc',
+                account_type='PRIVATE',
             )
         """
         from composio_client import BadRequestError
@@ -93,17 +134,18 @@ class ExperimentalAPI:
 
         if self._client is None:
             raise exceptions.ValidationError(
-                "update_acl requires a Composio client. Access it via "
-                "composio.experimental.update_acl(...)."
+                "update_sharing requires a Composio client. Access it via "
+                "composio.experimental.update_sharing(...)."
             )
         if (
-            allow_all_users is None
+            account_type is None
+            and allow_all_users is None
             and allowed_user_ids is None
             and not_allowed_user_ids is None
         ):
             raise exceptions.ValidationError(
-                "update_acl requires at least one of allow_all_users, "
-                "allowed_user_ids, or not_allowed_user_ids"
+                "update_sharing requires at least one of account_type, "
+                "allow_all_users, allowed_user_ids, or not_allowed_user_ids"
             )
 
         acl: t.Dict[str, t.Any] = {}
@@ -114,15 +156,25 @@ class ExperimentalAPI:
         if not_allowed_user_ids is not None:
             acl["not_allowed_user_ids"] = not_allowed_user_ids
 
+        # NOTE (shim until composio-client@>=1.40.0): the generated
+        # `connected_account_patch_params.Experimental` TypedDict ships
+        # `acl_config_for_shared` only — `account_type` lands on the
+        # PATCH wire shape via hermes#10032. Until that regen flows
+        # through, build the body as a plain dict and cast at the
+        # boundary. Remove the cast once the bumped client publishes.
+        experimental_body: t.Dict[str, t.Any] = {}
+        if account_type is not None:
+            experimental_body["account_type"] = account_type
+        if acl:
+            experimental_body["acl_config_for_shared"] = acl
+
         try:
             return self._client.connected_accounts.patch(
                 nanoid,
-                experimental={
-                    "acl_config_for_shared": t.cast(
-                        connected_account_patch_params.ExperimentalACLConfigForShared,
-                        acl,
-                    ),
-                },
+                experimental=t.cast(
+                    connected_account_patch_params.Experimental,
+                    experimental_body,
+                ),
             )
         except BadRequestError as error:
             message = str(error)
