@@ -52,7 +52,7 @@
     "name": "Slack",
     "logo": "https://logos.composio.dev/api/slack",
     "category": "team chat",
-    "toolCount": 150,
+    "toolCount": 154,
     "triggerCount": 8
   },
   {
@@ -300,7 +300,7 @@
     "name": "Microsoft Teams",
     "logo": "https://logos.composio.dev/api/microsoft_teams",
     "category": "team chat",
-    "toolCount": 163,
+    "toolCount": 166,
     "triggerCount": 0
   },
   {
@@ -372,7 +372,7 @@
     "name": "Salesforce",
     "logo": "https://logos.composio.dev/api/salesforce",
     "category": "crm",
-    "toolCount": 216,
+    "toolCount": 217,
     "triggerCount": 7
   },
   {
@@ -804,7 +804,7 @@
     "name": "Typefully",
     "logo": "https://logos.composio.dev/api/typefully",
     "category": "social media marketing",
-    "toolCount": 5,
+    "toolCount": 20,
     "triggerCount": 0
   },
   {
@@ -5520,6 +5520,14 @@
     "triggerCount": 0
   },
   {
+    "slug": "microsoft_power_bi",
+    "name": "Microsoft Power Bi",
+    "logo": "https://logos.composio.dev/api/microsoft_power_bi",
+    "category": "business intelligence",
+    "toolCount": 116,
+    "triggerCount": 0
+  },
+  {
     "slug": "minerstat",
     "name": "Minerstat",
     "logo": "https://logos.composio.dev/api/minerstat",
@@ -5677,6 +5685,14 @@
     "logo": "https://logos.composio.dev/api/needle",
     "category": "artificial intelligence",
     "toolCount": 16,
+    "triggerCount": 0
+  },
+  {
+    "slug": "neo4j",
+    "name": "Neo4J",
+    "logo": "https://logos.composio.dev/api/neo4j",
+    "category": "developer tools",
+    "toolCount": 21,
     "triggerCount": 0
   },
   {
@@ -7981,22 +7997,6 @@
     "logo": "https://logos.composio.dev/api/userlist",
     "category": "marketing automation",
     "toolCount": 2,
-    "triggerCount": 0
-  },
-  {
-    "slug": "v0",
-    "name": "V0",
-    "logo": "https://logos.composio.dev/api/v0",
-    "category": "artificial intelligence",
-    "toolCount": 44,
-    "triggerCount": 0
-  },
-  {
-    "slug": "vapi",
-    "name": "Vapi",
-    "logo": "https://logos.composio.dev/api/vapi",
-    "category": "artificial intelligence",
-    "toolCount": 38,
     "triggerCount": 0
   }
 ]

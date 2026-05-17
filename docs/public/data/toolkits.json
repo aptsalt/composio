@@ -13,7 +13,7 @@
     ],
     "toolCount": 63,
     "triggerCount": 2,
-    "version": "20260506_01",
+    "version": "20260515_00",
     "tools": [
       {
         "slug": "GMAIL_ADD_LABEL_TO_EMAIL",
@@ -490,7 +490,7 @@
       {
         "slug": "COMPOSIO_SEARCH_TOOLS",
         "name": "Search Composio Tools",
-        "description": "\n  Tool Server Info: Composio connects 500+ apps—Slack, GitHub, Notion, Google Workspace (Gmail, Sheets, Drive, Calendar), Microsoft (Outlook, Teams), X/Twitter, Figma, Web Search / Deep research, Browser tool (scrape URLs, browser automation), Meta apps (Instagram, Meta Ads), TikTok, AI tools like Nano Banana & Veo3, and more—for seamless cross-app automation.\n  Use this tool to discover relevant tools plus the recommended plan and common pitfalls for reliable execution.\n  Always call this tool first whenever a user mentions or implies an external app, service, or workflow—never say \"I don't have access to X/Y app\" before calling it.\n\nUsage guidelines:\n  - Use this tool whenever kicking off a task. Re-run it when you need additional tools/plans due to missing details, errors, or a changed use case.\n  - If the user pivots to a different use case in same chat, you MUST call this tool again with the new use case and generate a new session_id.\n  - Specify the use_case with a normalized description of the problem, query, or task. Be clear and precise. Queries can be simple single-app actions or multiple linked queries for complex cross-app workflows.\n  - Pass known_fields along with use_case as a string of key–value hints (for example, \"channel_name: general\") to help the search resolve missing details such as IDs.\n  \n\nSplitting guidelines (Important):\n  1. Atomic queries: 1 query = 1 tool call. Include hidden prerequisites (e.g., add \"get Linear issue\" before \"update Linear issue\").\n  2. Include app names: If user names a toolkit, include it in every sub query so intent stays scoped (e.g., \"fetch Gmail emails\", \"reply to Gmail email\").\n  3. English input: Translate non-English prompts while preserving intent and identifiers.\n\n  Example:\n  User query: \"send an email to John welcoming him and create a meeting invite for tomorrow\"\n  Search call: queries: [\n    {use_case: \"send an email to someone\", known_fields: \"recipient_name: John\"},\n    {use_case: \"create a meeting invite\", known_fields: \"meeting_date: tomorrow\"}\n  ]\n\nPlan review checklist (Important):\n  - The response includes a detailed execution plan and common pitfalls. You MUST review this plan carefully, adapt it to your current context, and generate your own final step-by-step plan before execution. Execute the steps in order to ensure reliable and accurate execution. Skipping or ignoring required steps can lead to unexpected failures.\n  - Check the plan and pitfalls for input parameter nuances (required fields, IDs, formats, limits). Before executing any tool, you MUST review its COMPLETE input schema and provide STRICTLY schema-compliant arguments to avoid invalid-input errors.\n  - Determine whether pagination is needed; if a response returns a pagination token and completeness is implied, paginate until exhaustion and do not return partial results.\n\nResponse:\n  - Tools & Input Schemas: The response lists toolkits (apps) and tools suitable for the task, along with their tool_slug, description, input schema / schemaRef, and related tools for prerequisites, alternatives, or next steps.\n    - NOTE: Tools with schemaRef instead of input_schema require you to call COMPOSIO_GET_TOOL_SCHEMAS first to load their full input_schema before use.\n  - Connection Info: If a toolkit has an active connection, the response includes it along with any available current user information. If no active connection exists, you MUST initiate a new connection via COMPOSIO_MANAGE_CONNECTIONS with the correct toolkit name. DO NOT execute any toolkit tool without an ACTIVE connection.\n  - Time Info: The response includes the current UTC time for reference. You can reference UTC time from the response if needed.\n  \n  - The tools returned to you through this are to be called via COMPOSIO_MULTI_EXECUTE_TOOL. Ensure each tool execution specifies the correct tool_slug and arguments exactly as defined by the tool's input schema.\n    - The response includes a memory parameter containing relevant information about the use case and the known fields that can be used to determine the flow of execution. Any user preferences in memory must be adhered to.\n\nSESSION: ALWAYS set this parameter, first for any workflow. Pass session: {generate_id: true} for new workflows OR session: {id: \"EXISTING_ID\"} to continue. ALWAYS use the returned session_id in ALL subsequent meta tool calls.\n    "
+        "description": "\n  Tool Server Info: Composio connects 500+ apps—Slack, GitHub, Notion, Google Workspace (Gmail, Sheets, Drive, Calendar), Microsoft (Outlook, Teams), X/Twitter, Figma, Web Search / Deep research, Browser tool (scrape URLs, browser automation), Meta apps (Instagram, Meta Ads), TikTok, and more—for seamless cross-app automation.\n  Use this tool to discover relevant tools plus the recommended plan and common pitfalls for reliable execution.\n  Always call this tool first whenever a user mentions or implies an external app, service, or workflow—never say \"I don't have access to X/Y app\" before calling it.\n\nUsage guidelines:\n  - Use this tool whenever kicking off a task. Re-run it when you need additional tools/plans due to missing details, errors, or a changed use case.\n  - If the user pivots to a different use case in same chat, you MUST call this tool again with the new use case and generate a new session_id.\n  - Specify the use_case with a normalized description of the problem, query, or task. Be clear and precise. Queries can be simple single-app actions or multiple linked queries for complex cross-app workflows.\n  - Pass known_fields along with use_case as a string of key–value hints (for example, \"channel_name: general\") to help the search resolve missing details such as IDs.\n  \n\nSplitting guidelines (Important):\n  1. Atomic queries: 1 query = 1 tool call. Include hidden prerequisites (e.g., add \"get Linear issue\" before \"update Linear issue\").\n  2. Include app names: If user names a toolkit, include it in every sub query so intent stays scoped (e.g., \"fetch Gmail emails\", \"reply to Gmail email\").\n  3. English input: Translate non-English prompts while preserving intent and identifiers.\n\n  Example:\n  User query: \"send an email to John welcoming him and create a meeting invite for tomorrow\"\n  Search call: queries: [\n    {use_case: \"send an email to someone\", known_fields: \"recipient_name: John\"},\n    {use_case: \"create a meeting invite\", known_fields: \"meeting_date: tomorrow\"}\n  ]\n\nPlan review checklist (Important):\n  - The response includes a detailed execution plan and common pitfalls. You MUST review this plan carefully, adapt it to your current context, and generate your own final step-by-step plan before execution. Execute the steps in order to ensure reliable and accurate execution. Skipping or ignoring required steps can lead to unexpected failures.\n  - Check the plan and pitfalls for input parameter nuances (required fields, IDs, formats, limits). Before executing any tool, you MUST review its COMPLETE input schema and provide STRICTLY schema-compliant arguments to avoid invalid-input errors.\n  - Determine whether pagination is needed; if a response returns a pagination token and completeness is implied, paginate until exhaustion and do not return partial results.\n\nResponse:\n  - Tools & Input Schemas: The response lists toolkits (apps) and tools suitable for the task, along with their tool_slug, description, input schema / schemaRef, and related tools for prerequisites, alternatives, or next steps.\n    - NOTE: Tools with schemaRef instead of input_schema require you to call COMPOSIO_GET_TOOL_SCHEMAS first to load their full input_schema before use.\n  - Connection Info: If a toolkit has an active connection, the response includes it along with any available current user information. If no active connection exists, you MUST initiate a new connection via COMPOSIO_MANAGE_CONNECTIONS with the correct toolkit name. DO NOT execute any toolkit tool without an ACTIVE connection.\n  - Time Info: The response includes the current UTC time for reference. You can reference UTC time from the response if needed.\n  \n  - The tools returned to you through this are to be called via COMPOSIO_MULTI_EXECUTE_TOOL. Ensure each tool execution specifies the correct tool_slug and arguments exactly as defined by the tool's input schema.\n    - The response includes a memory parameter containing relevant information about the use case and the known fields that can be used to determine the flow of execution. Any user preferences in memory must be adhered to.\n\nSESSION: ALWAYS set this parameter, first for any workflow. Pass session: {generate_id: true} for new workflows OR session: {id: \"EXISTING_ID\"} to continue. ALWAYS use the returned session_id in ALL subsequent meta tool calls.\n    "
       },
       {
         "slug": "COMPOSIO_WAIT_FOR_CONNECTION",
@@ -6222,9 +6222,9 @@
     "composioManagedAuthSchemes": [
       "OAUTH2"
     ],
-    "toolCount": 150,
+    "toolCount": 154,
     "triggerCount": 8,
-    "version": "20260512_00",
+    "version": "20260515_01",
     "tools": [
       {
         "slug": "SLACK_ADD_CALL_PARTICIPANTS",
@@ -6285,6 +6285,11 @@
         "slug": "SLACK_ASSISTANT_SEARCH_INFO",
         "name": "Check search capabilities",
         "description": "Check if semantic (AI-powered) search is available on the Slack workspace. Returns whether natural language queries will trigger semantic search in assistant.search.context calls."
+      },
+      {
+        "slug": "SLACK_CHAT_POST_MESSAGE",
+        "name": "Send message",
+        "description": "(DEPRECATED: use `SLACK_SEND_MESSAGE`) Posts a message to a Slack channel, DM, or private group; requires at least one content field (`markdown_text`, `text`, `blocks`, or `attachments`) — omitting all causes a `no_text` error. Fails with `not_in_channel`, `channel_not_found`, or `channel_is_archived` if the bot lacks access. Body limit ~4000 characters. Rate-limited at ~1 req/sec (HTTP 429, honor `Retry-After`). Not idempotent — duplicate calls post duplicate messages."
       },
       {
         "slug": "SLACK_CLOSE_DM",
@@ -6537,6 +6542,11 @@
         "description": "Joins an existing Slack conversation (public channel, private channel, or multi-person direct message) by its ID, if the authenticated user has permission. Joining an already-joined channel returns a non-fatal no-op response. Private or restricted channel joins may fail with a permission error."
       },
       {
+        "slug": "SLACK_LEAVE_A_CONVERSATION",
+        "name": "Leave conversation channel",
+        "description": "(DEPRECATED: use `SLACK_LEAVE_CONVERSATION`) Leaves a Slack conversation given its channel ID; fails if leaving as the last member of a private channel or if used on a Slack Connect channel."
+      },
+      {
         "slug": "SLACK_LEAVE_CONVERSATION",
         "name": "Leave conversation channel",
         "description": "Leaves a Slack conversation given its channel ID; fails if leaving as the last member of a private channel or if used on a Slack Connect channel."
@@ -6680,6 +6690,11 @@
         "slug": "SLACK_LOOKUP_CANVAS_SECTIONS",
         "name": "Lookup Canvas Sections",
         "description": "Looks up section IDs in a Slack Canvas for use with targeted edit operations. Section IDs are needed for insert_after, insert_before, delete, and section-specific replace operations."
+      },
+      {
+        "slug": "SLACK_MANUALLY_SET_USER_PRESENCE",
+        "name": "Set user presence",
+        "description": "(DEPRECATED: use `SLACK_SET_USER_PRESENCE`) Manually sets a user's Slack presence, overriding automatic detection; this setting persists across connections but can be overridden by user actions or Slack's auto-away (e.g., after 10 mins of inactivity)."
       },
       {
         "slug": "SLACK_OPEN_DM",
@@ -6875,6 +6890,11 @@
         "slug": "SLACK_SET_READ_CURSOR_IN_A_CONVERSATION",
         "name": "Set conversation read cursor",
         "description": "Marks a message, specified by its timestamp (`ts`), as the most recently read for the authenticated user in the given `channel`, provided the user is a member of the channel and the message exists within it."
+      },
+      {
+        "slug": "SLACK_SET_STATUS",
+        "name": "Set Slack user profile information",
+        "description": "(DEPRECATED: use `SLACK_SET_USER_PROFILE`) Updates a Slack user's profile, setting either individual fields or multiple fields via a JSON object."
       },
       {
         "slug": "SLACK_SET_THE_TOPIC_OF_A_CONVERSATION",
@@ -10002,7 +10022,7 @@
     ],
     "toolCount": 89,
     "triggerCount": 7,
-    "version": "20260512_00",
+    "version": "20260514_00",
     "tools": [
       {
         "slug": "GOOGLEDRIVE_ADD_FILE_SHARING_PREFERENCE",
@@ -14259,7 +14279,7 @@
     ],
     "toolCount": 88,
     "triggerCount": 8,
-    "version": "20260512_00",
+    "version": "20260515_01",
     "tools": [
       {
         "slug": "SLACKBOT_ADD_CALL_PARTICIPANTS",
@@ -14783,7 +14803,7 @@
                 "type": "string",
                 "description": "Scopes to request from the bot",
                 "required": false,
-                "default": "channels:history,chat:write,team:read,channels:read,users:read,reactions:read"
+                "default": "channels:history,chat:write,team:read,channels:read,users:read,reactions:read,reactions:write"
               },
               {
                 "name": "verification_token",
@@ -23617,14 +23637,19 @@
     "composioManagedAuthSchemes": [
       "OAUTH2"
     ],
-    "toolCount": 163,
+    "toolCount": 166,
     "triggerCount": 0,
-    "version": "20260504_00",
+    "version": "20260515_01",
     "tools": [
       {
         "slug": "MICROSOFT_TEAMS_ADD_CHAT_MEMBER",
         "name": "Add chat member",
         "description": "Tool to add a conversationMember to a Microsoft Teams chat. Use when adding a user to an existing chat conversation."
+      },
+      {
+        "slug": "MICROSOFT_TEAMS_ADD_MEMBER_TO_TEAM",
+        "name": "Add member to team",
+        "description": "(DEPRECATED: use `MICROSOFT_TEAMS_ADD_TEAM_MEMBER`) Tool to add a user to a Microsoft Teams team. Use when granting or updating membership for a user."
       },
       {
         "slug": "MICROSOFT_TEAMS_ADD_TAB",
@@ -24287,6 +24312,11 @@
         "description": "Tool to share a Microsoft Teams schedule for a specified time range. Use when you need to make a team's schedule visible to members."
       },
       {
+        "slug": "MICROSOFT_TEAMS_TEAMS_CREATE_CHANNEL",
+        "name": "Create a channel",
+        "description": "(DEPRECATED: use `MICROSOFT_TEAMS_CREATE_CHANNEL`) Tool to create a new standard, private, or shared channel within a Microsoft Teams team. Use when you need to create a new channel for team collaboration."
+      },
+      {
         "slug": "MICROSOFT_TEAMS_TEAMS_CREATE_CHAT",
         "name": "Create Chat",
         "description": "Creates a new chat; if a 'oneOnOne' chat with the specified members already exists, its details are returned, while 'group' chats are always newly created. IMPORTANT: The authenticated user MUST be included as one of the members."
@@ -24320,6 +24350,11 @@
         "slug": "MICROSOFT_TEAMS_TEAMS_POST_CHAT_MESSAGE",
         "name": "Send message to Teams chat",
         "description": "Sends a non-empty message (text or HTML) to a specified, existing Microsoft Teams chat; content must be valid HTML if `content_type` is 'html'."
+      },
+      {
+        "slug": "MICROSOFT_TEAMS_TEAMS_POST_MESSAGE_REPLY",
+        "name": "Reply to Teams channel message",
+        "description": "(DEPRECATED: use `MICROSOFT_TEAMS_POST_MESSAGE_REPLY`) Sends a reply to an existing message, identified by `message_id`, within a specific `channel_id` of a given `team_id` in Microsoft Teams."
       },
       {
         "slug": "MICROSOFT_TEAMS_UNARCHIVE_CHANNEL",
@@ -31196,9 +31231,9 @@
     "composioManagedAuthSchemes": [
       "OAUTH2"
     ],
-    "toolCount": 216,
+    "toolCount": 217,
     "triggerCount": 7,
-    "version": "20260501_00",
+    "version": "20260515_01",
     "tools": [
       {
         "slug": "SALESFORCE_ACCOUNT_CREATION_WITH_CONTENT_TYPE_OPTION",
@@ -32089,6 +32124,11 @@
         "slug": "SALESFORCE_RETRIEVE_SPECIFIC_CAMPAIGN_OBJECT_DETAILS",
         "name": "Retrieve specific campaign object details",
         "description": "DEPRECATED: Retrieves details for a specific Salesforce Campaign object by its ID, optionally limiting to specified fields; the Campaign object must exist."
+      },
+      {
+        "slug": "SALESFORCE_RETRIEVE_SPECIFIC_CONTACT_BY_ID",
+        "name": "Retrieve specific contact by id",
+        "description": "(DEPRECATED: use `SALESFORCE_GET_CONTACT_BY_ID`) Retrieves a Salesforce Contact by its unique ID; the ID must correspond to an existing Contact record in Salesforce."
       },
       {
         "slug": "SALESFORCE_RUN_REPORT",
@@ -48088,7 +48128,7 @@
     ],
     "toolCount": 178,
     "triggerCount": 0,
-    "version": "20260506_00",
+    "version": "20260513_00",
     "tools": [
       {
         "slug": "FRESHDESK_ADD_NOTE_TO_TICKET",
@@ -61837,7 +61877,7 @@
     ],
     "toolCount": 442,
     "triggerCount": 20,
-    "version": "20260512_00",
+    "version": "20260515_00",
     "tools": [
       {
         "slug": "GOOGLESUPER_ACL_DELETE",
@@ -64570,19 +64610,54 @@
     "authSchemes": [
       "API_KEY"
     ],
-    "toolCount": 5,
+    "toolCount": 20,
     "triggerCount": 0,
-    "version": "20260506_00",
+    "version": "20260513_00",
     "tools": [
       {
         "slug": "TYPEFULLY_CREATE_DRAFT",
-        "name": "Create Draft",
-        "description": "Creates a draft in Typefully."
+        "name": "Create Draft (v2)",
+        "description": "Create a new draft with platform-specific content for multi-platform publishing. Use this action when you need to create a draft that can target multiple social media platforms (X, LinkedIn, Threads, Bluesky, Mastodon) simultaneously. The draft can be saved for later editing, scheduled for a specific time or next available slot, or published immediately. Supports scheduling options via publish_at: \"now\" for immediate publishing, \"next-free-slot\" for your next available posting window, or an ISO 8601 datetime string with timezone for a specific scheduled time."
+      },
+      {
+        "slug": "TYPEFULLY_CREATE_TAG",
+        "name": "Create Tag",
+        "description": "Creates a new tag for organizing drafts within a social set in Typefully. Use this action when you need to add a new organizational tag to help categorize and group drafts within a specific social account. The tag's slug is automatically generated from the provided name."
+      },
+      {
+        "slug": "TYPEFULLY_DELETE_DRAFT",
+        "name": "Delete Draft",
+        "description": "Permanently deletes a draft from Typefully. This action cannot be undone. Use this action when you need to remove a draft that is no longer needed. WARNING: This is a destructive operation. Once deleted, the draft cannot be recovered."
+      },
+      {
+        "slug": "TYPEFULLY_GET_CURRENT_USER",
+        "name": "Get Current User",
+        "description": "Get the current authenticated user's information. Returns user details including profile information, email, signup date, and optional profile image URL. Use this action when you need to retrieve the profile information of the currently authenticated Typefully user, such as for displaying user details or verifying authentication."
+      },
+      {
+        "slug": "TYPEFULLY_GET_DRAFT",
+        "name": "Get Draft",
+        "description": "Retrieves a single draft by its ID with full details including platform-specific content, tags, status, and scheduling information. Use this action when you need to retrieve comprehensive details about a specific draft in Typefully. This action requires both the social_set_id and draft_id path parameters to identify the specific draft."
+      },
+      {
+        "slug": "TYPEFULLY_GET_MEDIA_STATUS",
+        "name": "Get Media Status",
+        "description": "Check the processing status of an uploaded media file. Use when you need to poll the status of a media file after uploading it. Poll this endpoint until status becomes 'ready' before using the media in drafts. Returns status (processing/ready/failed) and media_urls when ready. This action is read-only and idempotent."
       },
       {
         "slug": "TYPEFULLY_GET_NOTIFICATIONS",
         "name": "Get Notifications",
         "description": "Get notifications from Typefully. Can be filtered by kind (inbox or activity)."
+      },
+      {
+        "slug": "TYPEFULLY_GET_QUEUE",
+        "name": "Get Queue",
+        "description": "Get the scheduled content queue for a social set within a date range. Returns upcoming scheduled drafts organized by day with their scheduled times. Use this action when you need to view what content is scheduled for a specific date range for a particular social media account in Typefully."
+      },
+      {
+        "slug": "TYPEFULLY_GET_QUEUE_SCHEDULE",
+        "name": "Get Queue Schedule",
+        "description": "Get the queue schedule configuration for a social set, including posting slots and timezone settings. Use this action when you need to retrieve the scheduling rules and timezone configuration for a social media account in Typefully."
       },
       {
         "slug": "TYPEFULLY_GET_RECENTLY_PUBLISHED",
@@ -64595,9 +64670,49 @@
         "description": "Get recently scheduled drafts from Typefully."
       },
       {
+        "slug": "TYPEFULLY_GET_SOCIAL_SET",
+        "name": "Get Social Set",
+        "description": "Get detailed information about a specific social set, including all connected platforms (X, LinkedIn, Mastodon, Threads, Bluesky) with account details and profile information. Use this action when you need to retrieve the details and platform connections for a specific social set by its ID."
+      },
+      {
+        "slug": "TYPEFULLY_INITIALIZE_MEDIA_UPLOAD",
+        "name": "Initialize Media Upload",
+        "description": "Initializes a media upload by returning a presigned URL. Use when you need to upload images, videos, GIFs, or PDFs to attach to draft posts. First call this action to get a `media_id` and `upload_url`. Then PUT your file content directly to the `upload_url`. Finally, use the `media_id` in your draft content to attach the media. This action is idempotent — calling it multiple times with the same parameters will return new (unused) presigned URLs."
+      },
+      {
+        "slug": "TYPEFULLY_LIST_DRAFTS",
+        "name": "List Drafts",
+        "description": "List drafts for a social set with filtering and sorting options. Use this action when you need to retrieve drafts from a specific social set in Typefully. Supports filtering by status (draft, scheduled, published) and tags, and results are ordered by last edited date (most recent first) by default. Results are paginated with support for limit/offset-based pagination."
+      },
+      {
+        "slug": "TYPEFULLY_LIST_SOCIAL_SETS",
+        "name": "List Social Sets",
+        "description": "List all social sets (groups of connected platform accounts) accessible to the authenticated user. Returns paginated list of social sets with basic info including id, username, name, and profile image. Use this action when you need to retrieve social sets for a user or display available accounts."
+      },
+      {
+        "slug": "TYPEFULLY_LIST_TAGS",
+        "name": "List Tags",
+        "description": "List all tags for a social set. Tags help organize and categorize drafts. Use this action when you need to retrieve all tags associated with a specific social set to organize, filter, or categorize drafts within Typefully."
+      },
+      {
         "slug": "TYPEFULLY_MARK_NOTIFICATIONS_READ",
         "name": "Mark Notifications Read",
         "description": "Mark notifications as read in Typefully. Can be filtered by kind and account_id."
+      },
+      {
+        "slug": "TYPEFULLY_RESOLVE_LINKED_IN_ORGANIZATION",
+        "name": "Resolve LinkedIn Organization",
+        "description": "Resolve a LinkedIn organization from its public URL. Returns the organization URN needed for mentions in LinkedIn posts. Use this action when you need to get the LinkedIn organization identifier to include company or school mentions in posts."
+      },
+      {
+        "slug": "TYPEFULLY_UPDATE_DRAFT",
+        "name": "Update Draft",
+        "description": "Update an existing draft with partial update semantics. Use this action when you need to modify specific fields of an existing draft. Only the fields you provide will be updated; omitted fields remain unchanged. This action supports updating: content/title, scheduling (publish_at), tags, scratchpad notes, sharing options, or platform configurations. Note: Cannot update drafts that have already been published."
+      },
+      {
+        "slug": "TYPEFULLY_UPDATE_QUEUE_SCHEDULE",
+        "name": "Update Queue Schedule",
+        "description": "Replace the queue schedule configuration for a social set. Defines the posting slots for scheduled content. Use this action when you need to update or configure the posting schedule for a social account, such as changing the days and times when content should be published. This performs a full replacement of the schedule rules — existing rules will be overwritten with the new rules provided."
       }
     ],
     "triggers": [],
@@ -117909,7 +118024,7 @@
     ],
     "toolCount": 3,
     "triggerCount": 0,
-    "version": "20260506_00",
+    "version": "20260513_00",
     "tools": [
       {
         "slug": "AYRSHARE_CREATE_AUTO_SCHEDULE",
@@ -171752,7 +171867,7 @@
     ],
     "toolCount": 9,
     "triggerCount": 0,
-    "version": "20260424_00",
+    "version": "20260513_00",
     "tools": [
       {
         "slug": "FRESHSERVICE_BULK_UPDATE_TICKETS",
@@ -204094,6 +204209,652 @@
     ]
   },
   {
+    "slug": "microsoft_power_bi",
+    "name": "Microsoft Power Bi",
+    "logo": "https://logos.composio.dev/api/microsoft_power_bi",
+    "description": "Microsoft Power BI is a business analytics service that provides interactive visualizations and business intelligence capabilities with an interface simple enough for end users to create their own reports and dashboards.",
+    "category": "business intelligence",
+    "authSchemes": [
+      "OAUTH2"
+    ],
+    "toolCount": 116,
+    "triggerCount": 0,
+    "version": "00000000_00",
+    "tools": [
+      {
+        "slug": "MICROSOFT_POWER_BI_ADD_DASHBOARD2",
+        "name": "Add Dashboard to Workspace",
+        "description": "Creates a new empty dashboard in the specified workspace. Use this action when you need to create a new dashboard in a Power BI workspace. The API call can be called by a service principal profile. Requires the Workspace.ReadWrite.All scope. Note: The created dashboard will be empty and can be populated with tiles afterward using other APIs."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_APPS_GET_REPORTS",
+        "name": "Get Reports From App",
+        "description": "Returns a list of reports from the specified app. Use this action when you need to retrieve all reports that belong to a specific Power BI app. This is useful for exploring app contents, finding specific reports within apps, or managing app resources. Required Scope: Report.ReadWrite.All or Report.Read.All Limitations: Service principal authentication isn't supported."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_ASSIGN_WORKSPACE_TO_CAPACITY",
+        "name": "Assign Workspace to Capacity",
+        "description": "Assigns the specified workspace to the specified capacity. Use this action when you need to assign a Power BI workspace to a dedicated capacity or unassign My workspace from a capacity by providing an empty GUID (00000000-0000-0000-0000-000000000000). This operation is typically performed by Fabric administrators to manage workspace capacity assignments. Note: The user must have appropriate permissions (Capacity.ReadWrite.All or workspace admin rights)."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CANCEL_REFRESH2",
+        "name": "Cancel Dataset Refresh in Workspace",
+        "description": "Cancels the specified refresh operation for the specified dataset from the specified workspace. Use this action when you need to cancel an in-progress dataset refresh operation within a specific Power BI workspace. This is useful for stopping long-running refreshes that are no longer needed or that appear to be stuck. Note that only refresh operations with status of Unknown or Queued can be canceled. Once a refresh has started processing, it cannot be cancelled. This action is irreversible - once a refresh is successfully cancelled, it cannot be resumed and must be triggered again manually. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CLONE_REPORT2",
+        "name": "Clone Report",
+        "description": "Clones the specified report from My workspace. If the dataset for a cloned report resides in two different workspaces or in My workspace, then a shared dataset is created. Use when you need to duplicate a report within My workspace or to another workspace. This is useful for creating backup copies of reports, testing modifications without affecting the original, or preparing reports for different audiences. Required Scope: Report.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CLONE_REPORT_IN_GROUP",
+        "name": "Clone Report in Workspace",
+        "description": "Clones the specified report from the specified workspace. Use this action when you need to duplicate a Power BI report within the same workspace or to a different workspace. If the dataset for a cloned report resides in two different workspaces or in My workspace, then a share is required. The API returns the cloned report with a new ID. Required Scope: Report.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CREATE_GOAL_VALUE",
+        "name": "Create Goal Value Check-in",
+        "description": "Creates a new goal value check-in for a Power BI scorecard goal. Use this action when you need to record a new value check-in for a specific goal within a Power BI scorecard. This action allows you to update the current value, target, status, trend, and forecast of a goal. The timestamp is required and represents the UTC time of the check-in. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CREATE_GROUP",
+        "name": "Create Workspace",
+        "description": "Creates a new workspace in Power BI. Use this action when you need to create a new Power BI workspace to organize reports, dashboards, datasets, and other Power BI content. This API call can be called by a service principal profile. Requires the Workspace.ReadWrite.All scope. Note: The created workspace will be empty and may require additional configuration such as assigning capacity or adding members."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CREATE_PUSH_DATASET",
+        "name": "Create Push Dataset",
+        "description": "Creates a new dataset on My workspace in Power BI. Use this action when you need to create a new push dataset to store and manage data that can be pushed programmatically via the Power BI REST API. This API call only supports push datasets (Push, Streaming, or PushStreaming mode). This action is irreversible once the dataset is created. The dataset name must be unique within the workspace."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CREATE_SCORECARD",
+        "name": "Create Scorecard",
+        "description": "Creates a new scorecard in the specified Power BI workspace. Use this action when you need to create a new scorecard to track business objectives and key results in a specific Power BI workspace. Scorecards help organizations monitor progress toward goals with customizable metrics, status rules, and reporting. Requires the Dataset.ReadWrite.All scope. This action is irreversible once the scorecard is created. The scorecard name must be unique within the workspace."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CREATE_TEMPORARY_UPLOAD_LOCATION",
+        "name": "Create Temporary Upload Location",
+        "description": "Creates a temporary blob storage upload location for importing large Power BI .pbix files that are between 1 GB and 10 GB in size. Use this action when you need to upload a large Power BI .pbix file (between 1 GB and 10 GB) to the organization. The temporary upload location provides a shared access signature (SAS) URL where the file can be uploaded before being imported into Power BI. After uploading to the temporary location, you would use the regular import API to complete the import process. This action creates an upload location at the organization level (myorg), not a specific workspace. To upload to a specific workspace, use CreateTemporaryUploadLocationInGroup instead. Required Scope: Workspace.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_CREATE_TEMPORARY_UPLOAD_LOCATION_IN_GROUP",
+        "name": "Create Temporary Upload Location",
+        "description": "Creates a temporary blob storage upload location for importing large Power BI .pbix files that are between 1 GB and 10 GB in size. Use this action when you need to upload a large Power BI .pbix file (between 1 GB and 10 GB) to a workspace. The temporary upload location provides a shared access signature (SAS) URL where the file can be uploaded before being imported into Power BI. After uploading to the temporary location, you would use the regular import API to complete the import process. Required Scope: Workspace.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_DASHBOARD",
+        "name": "Delete Dashboard",
+        "description": "Deletes the specified dashboard from My workspace. Use this action when you need to permanently remove a dashboard from a user's Power BI workspace. This action is irreversible — once deleted, the dashboard and all its content cannot be recovered. Required Scope: Dashboard.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_DATAFLOW",
+        "name": "Delete Dataflow",
+        "description": "Deletes the specified dataflow from Power BI data prep storage, including its definition file and model. Use this action when you need to permanently remove a dataflow from a Power BI workspace. This action is irreversible — once deleted, the dataflow and all its associated data cannot be recovered. Permissions: The user must have administrator rights or the caller must be a service principal."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_DATASET",
+        "name": "Delete Dataset",
+        "description": "Deletes the specified dataset from My workspace. Use this action when you need to permanently remove a dataset from a user's Power BI workspace. This action is irreversible — once deleted, the dataset and all its associated data cannot be recovered. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_DATASET2",
+        "name": "Delete Dataset from Workspace",
+        "description": "Deletes the specified dataset from the specified workspace. Use this action when you need to permanently remove a dataset from a specific Power BI workspace. This action is irreversible — once deleted, the dataset and all its associated data cannot be recovered. This API call can be called by a service principal profile. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_GOAL",
+        "name": "Delete Goal",
+        "description": "Deletes a goal from a scorecard by goal ID. Use this action when you need to permanently remove a goal from a Power BI scorecard. This action is irreversible — once deleted, the goal and its associated data cannot be recovered. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_GOAL_NOTE_BY_ID",
+        "name": "Delete Goal Note by ID",
+        "description": "Deletes a goal value check-in note by its unique identifier. Use this action when you need to remove a specific check-in note from a goal value in Power BI goals. This action is irreversible — once deleted, the note cannot be recovered. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_GOAL_STATUS_RULES",
+        "name": "Delete Goal Status Rules",
+        "description": "Removes status rule definitions from a goal. Use this action when you need to remove all status rules from a specific goal within a Power BI scorecard. This action is irreversible — once deleted, the status rules and their configuration cannot be recovered. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_PIPELINE_USER",
+        "name": "Delete Pipeline User",
+        "description": "Removes user permissions from the specified deployment pipeline. Use this action when you need to revoke a user's access to a deployment pipeline. This action is irreversible — once removed, the user loses access to the pipeline. Required Scope: Pipeline.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_REPORT_IN_GROUP",
+        "name": "Delete Report from Workspace",
+        "description": "Deletes the specified report from the specified workspace. Use this action when you need to permanently remove a report from a specific Power BI workspace. This action is irreversible — once deleted, the report and all its content cannot be recovered. This API call can be called by a service principal profile. Required Scope: Report.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_ROWS",
+        "name": "Delete Rows from Dataset Table",
+        "description": "Deletes all rows from the specified table within the specified dataset from My workspace. Use this action when you need to clear all data from a specific table within a Power BI push dataset. This action is irreversible — once deleted, the rows cannot be recovered. This operation is commonly used to reset test data or prepare a table for fresh data ingestion. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_ROWS_IN_GROUP",
+        "name": "Delete Rows from Dataset Table in Workspace",
+        "description": "Deletes all rows from the specified table within the specified dataset from the specified workspace. Use this action when you need to clear all data from a specific table within a Power BI push dataset in a specific workspace. This action is irreversible — once deleted, the rows cannot be recovered. This operation is commonly used to reset test data or prepare a table for fresh data ingestion in a workspace context. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_SCORECARD_BY_ID",
+        "name": "Delete Scorecard By ID",
+        "description": "Deletes a scorecard by its ID from the specified workspace. Use this action when you need to permanently remove a scorecard from a Power BI workspace. This action is irreversible — once deleted, the scorecard and all its data cannot be recovered. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DELETE_WORKSPACE",
+        "name": "Delete Workspace",
+        "description": "Deletes the specified workspace. Use this action when you need to permanently remove a Power BI workspace. This action is irreversible — once deleted, the workspace and all its content (reports, dashboards, datasets) cannot be recovered. Required Scope: Workspace.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_DISCOVER_GATEWAYS",
+        "name": "Discover Gateways for Dataset",
+        "description": "Returns a list of gateways that the specified dataset from the specified workspace can be bound to. Use this action when you need to discover which on-premises data gateways are available to bind a dataset to for refresh and data source connections. This API call is only relevant for datasets that have at least one binding to an on-premises data source. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_EXECUTE_DAX_QUERIES",
+        "name": "Execute DAX Queries",
+        "description": "Executes Data Analysis Expressions (DAX) queries against the provided dataset in My workspace. Use this action when you need to run DAX queries to retrieve or analyze data from a Power BI dataset. This endpoint supports complex DAX queries with multiple EVALUATE statements and includes features for Row-Level Security (RLS), culture-specific formatting, and custom data injection. The response is returned in Apache Arrow format and contains the query results in a columnar format. Use pyarrow or similar libraries to parse the response. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All Important: This API is only available for datasets hosted on a capacity. Datasets with live connections to Azure Analysis Services or on-premises models are not supported. There's a limit of 120 query requests per minute per user."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_EXECUTE_QUERIES_2",
+        "name": "Execute DAX Queries on Dataset",
+        "description": "Executes Data Analysis Expressions (DAX) queries against the specified Power BI dataset. Use this action when you need to run DAX queries to retrieve data, perform calculations, or analyze data directly from a Power BI dataset. DAX query errors (such as syntax errors or invalid references) will result in an error response. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_EXECUTE_SUBSCRIPTION",
+        "name": "Execute Subscription",
+        "description": "Executes the Subscription specified by the Id. Use this action when you need to manually trigger a Power BI email subscription to run immediately instead of waiting for its scheduled frequency. This is useful for testing subscriptions, generating reports on-demand, or forcing an unscheduled distribution of a report. Note: The API returns 204 No Content on success with an empty body."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GENERATE_DASHBOARD_EMBED_TOKEN",
+        "name": "Generate Dashboard Embed Token",
+        "description": "Generates an embed token to view or edit the specified dashboard from the specified workspace. Use this action when you need to generate an embed token to embed a Power BI dashboard in your application. The token allows you to embed the dashboard with the specified access level. You can also configure row-level security (RLS) by providing identities. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GENERATE_EMBED_TOKEN",
+        "name": "Generate Embed Token for Power BI",
+        "description": "Generates an embed token for multiple reports, datasets, and target workspaces. Use this action when you need to generate an embed token to embed Power BI reports, dashboards, or visuals in your application. Reports and datasets do not have to be related. The token can include identities for row-level security (RLS) and single sign-on (SSO) data sources."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GENERATE_REPORT_TOKEN_IN_GROUP",
+        "name": "Generate Report Embed Token in Group",
+        "description": "Generates an embed token to view or edit the specified report from the specified workspace. Use this action when you need to generate an embed token to embed a Power BI report in your application. The token allows you to control the access level (View, Edit, or Create) for the embedded report. You can also configure row-level security (RLS) by providing identities, customize the token lifetime, and enable the allowSaveAs option for saving embedded reports as new reports. Required Scope: Report.ReadWrite.All or Report.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GENERATE_TOKEN_IN_GROUP",
+        "name": "Generate Dataset Embed Token in Group",
+        "description": "Generates an embed token based on the specified dataset from the specified workspace. Use this action when you need to generate an embed token to embed Power BI reports or dashboards using a specific dataset from a workspace in your application. The token allows you to control the access level (View, Edit, or Create) for the embedded content. You can also configure row-level security (RLS) by providing identities, and customize the token lifetime. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_AVAILABLE_FEATURE_BY_NAME",
+        "name": "Get Available Feature By Name",
+        "description": "Returns the specified available feature for the user by name. Use this action when you need to check the availability and status of a specific Power BI feature, such as embedTrial. This API call doesn't require any scopes. Note: The featureName path parameter should be URL-encoded if it contains special characters."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_CAPACITIES",
+        "name": "Get Capacities",
+        "description": "Returns a list of Power BI capacities that the authenticated user has access to. Use this action to retrieve information about all available capacities in the organization, including their state, SKU, region, and access permissions. This is useful for admin operations and capacity management tasks. Permissions: Requires one of the following scopes: Capacity.Read.All or Capacity.ReadWrite.All. This API call can be called by a service principal profile."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DASHBOARD2",
+        "name": "Get Dashboard from My Workspace",
+        "description": "Returns the specified dashboard from My workspace. Use when you need to retrieve details about a specific dashboard from the current user's personal workspace in Power BI. This is useful for getting dashboard metadata, embed URLs, or user permissions. Required Scope: Dashboard.ReadWrite.All or Dashboard.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DASHBOARDS",
+        "name": "Get Dashboards",
+        "description": "Returns a list of dashboards from the specified workspace. Use this action when you need to retrieve all dashboards within a Power BI workspace. This is useful for exploring workspace contents, finding specific dashboard IDs, or managing dashboard resources. Permissions: This API call can be called by a service principal profile."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATAFLOWS",
+        "name": "Get Dataflows",
+        "description": "Returns a list of all dataflows from the specified workspace. Use this action when you need to retrieve all dataflows within a specific Power BI workspace. This is useful for inventory, monitoring, or managing dataflows within a workspace. This API call can be called by a service principal profile. Required Scope: Dataflow.Read.All or Dataflow.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASET",
+        "name": "Get Dataset",
+        "description": "Returns the specified dataset from My workspace. Use this action when you need to retrieve details about a specific Power BI dataset in your workspace, including its configuration, permissions, and relationships to other artifacts like dataflows and tables. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASET2",
+        "name": "Get Dataset in Workspace",
+        "description": "Returns the specified dataset from the specified workspace. Use this action when you need to retrieve details about a specific Power BI dataset in a workspace, including its configuration, permissions, and relationships to other artifacts like dataflows and tables. Permissions: This API call can be called by a service principal profile. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATA_SET_DATA",
+        "name": "Get DataSet Data",
+        "description": "Gets the query results for the specified DataSet. Use when you need to retrieve the actual data values from a Power BI DataSet, such as for exporting data, generating reports outside of Power BI, or performing data analysis on dataset contents. This action executes a query against the dataset and returns the column definitions and row data. Use the optional parameters to filter or customize the query results."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASETS",
+        "name": "Get Datasets from My Workspace",
+        "description": "Returns a list of datasets from My workspace. Use when you need to retrieve all datasets available in the authenticated user's personal workspace, including their configuration and metadata. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATA_SETS",
+        "name": "Get DataSets from Power BI",
+        "description": "Gets an array of DataSet CatalogItems from Power BI. Use when you need to retrieve all available datasets from the Power BI service, including their metadata such as creation date, modified date, owner, and dataset-specific properties like query timeout and parameters. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASET_TO_DATAFLOWS_LINKS",
+        "name": "Get Dataset to Dataflows Links",
+        "description": "Returns a list of upstream dataflows for datasets from the specified workspace. Use this action when you need to retrieve the relationships between datasets and their upstream dataflows in a Power BI workspace for dependency analysis or lineage tracking. This API call can be called by a service principal profile."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASET_USERS",
+        "name": "Get Dataset Users",
+        "description": "Returns a list of principals that have access to the specified dataset. Use this action when you need to retrieve the list of users or service principals who have been granted access to a specific Power BI dataset. This is useful for auditing dataset permissions, managing access control, or understanding who can view or modify the dataset. Note: When user permissions to a dataset have been recently updated, the new permissions might not be immediately available."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASET_USERS_IN_GROUP",
+        "name": "Get Dataset Users In Group",
+        "description": "Returns a list of principals that have access to the specified dataset within a workspace. Use this action when you need to retrieve the list of users or service principals who have been granted access to a specific Power BI dataset within a workspace. This is useful for auditing dataset permissions, managing access control, or understanding who can view or modify the dataset in a group context. Note: When user permissions to a dataset have been recently updated, the new permissions might not be immediately available."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASOURCES",
+        "name": "Get Datasources for Dataset",
+        "description": "Returns a list of data sources for the specified dataset from My workspace. Use when you need to retrieve all data source connections configured for a specific Power BI dataset, such as when auditing data sources, troubleshooting refresh issues, or understanding dataset dependencies. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_DATASOURCES_IN_GROUP3",
+        "name": "Get Datasources for Dataset in Workspace",
+        "description": "Returns a list of data sources for the specified dataset from the specified workspace. Use when you need to retrieve all data source connections configured for a specific Power BI dataset within a workspace, such as when auditing data sources, troubleshooting refresh issues, or understanding dataset dependencies. This API call can be called by a service principal profile. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GATEWAY",
+        "name": "Get Gateway",
+        "description": "Returns the specified gateway. Use this action when you need to retrieve details about a specific Power BI gateway, including its status, type, and public key for encryption. Permissions: The user must have gateway admin permissions. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GATEWAY_DATASOURCES_IN_GROUP",
+        "name": "Get Gateway Datasources in Group",
+        "description": "Returns a list of gateway data sources for the specified dataset from the specified workspace. Use this action when you need to retrieve all gateway data source connections configured for a specific Power BI dataset within a workspace. This is useful for auditing data source configurations, troubleshooting refresh issues, or understanding dataset dependencies. This API is deprecated - use Get Datasources In Group instead."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GATEWAYS",
+        "name": "Get Gateways",
+        "description": "Returns a list of gateways for which the user is an admin. Use this action when you need to retrieve all Power BI gateways that you have administrative permissions for. This is useful for monitoring gateway status, managing data sources, or administering on-premises data gateway configurations. Gateway admin permissions are required to access this endpoint."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GOALS",
+        "name": "Get Goals from Scorecard",
+        "description": "Returns a list of goals from a scorecard. Use this action when you need to retrieve all goals defined within a Power BI scorecard. This is useful for understanding the organizational objectives and key results (OKRs) tracked in Power BI, finding specific goal IDs, or monitoring progress against targets. This API call can be called by a service principal profile. Required Scope: Dataset.Read.All or Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GOALS_REFRESH_HISTORY",
+        "name": "Get Goals Refresh History",
+        "description": "Reads refresh history of a connected goal. Use this action when you need to retrieve the refresh history for a specific Power BI goal to monitor refresh performance, identify failed refreshes, or audit refresh operations on goals. This endpoint is part of the Power BI Goals (Preview) API. Required Scope: Dataset.Read.All or Dataset.ReadWrite.All Note: This is a preview API and may be subject to changes."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GOALS_STATUS_RULES",
+        "name": "Get Goals Status Rules",
+        "description": "Returns status rules of a goal. Use this action when you need to retrieve the status rules configuration for a specific Power BI goal within a scorecard. Status rules determine how goal status is calculated based on conditions (e.g., if actual value > 50% of target, status is \"On track\"). This action supports reading both simple expression-based conditions and complex field comparison conditions. Required Scope: Dataset.Read.All or Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GOAL_VALUE_BY_ID",
+        "name": "Get Goal Value By ID",
+        "description": "Reads a goal value check-in by a UTC date timestamp. Use this action when you need to retrieve a specific goal value check-in from a Power BI scorecard. This is useful for tracking historical goal values, reviewing notes on goal progress, or analyzing trends. The timestamp must be provided in UTC format (e.g., 2024-05-12T00:00:00Z). Required Scope: Dataset.Read.All or Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GROUPS",
+        "name": "Get Groups",
+        "description": "Returns a list of workspaces the user has access to. Use this action when you need to retrieve all Power BI workspaces (groups) that the authenticated user has access to. This is useful for listing available workspaces, finding specific workspace IDs, or managing workspace resources. This API call can be called by a service principal profile. Required Scope: Workspace.Read.All or Workspace.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GROUPS_CAPACITY_ASSIGNMENT_STATUS",
+        "name": "Get Groups Capacity Assignment Status",
+        "description": "Gets the status of the assignment-to-capacity operation for the specified workspace. Use this action when you need to check the current status of a workspace assignment operation to a capacity. This is useful for monitoring long-running workspace migrations or diagnosing failed assignments. Required Scope: Workspace.Read.All or Workspace.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_GROUP_USERS",
+        "name": "Get Group Users",
+        "description": "Returns a list of users that have access to the specified workspace. Use this action when you need to retrieve the list of users or service principals who have been granted access to a specific Power BI workspace. This is useful for auditing workspace permissions, managing access control, or understanding who can view or modify the workspace contents. Permissions: This API call can be called by a service principal profile."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_IMPORT",
+        "name": "Get Import",
+        "description": "Returns the specified import from My workspace. Use this action when you need to retrieve details about a specific import in your Power BI workspace, including its status, associated datasets, and reports. This is useful for tracking import operations, checking whether an import succeeded or failed, and identifying related artifacts. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_IMPORTS2",
+        "name": "Get Imports from My Workspace",
+        "description": "Returns a list of imports from My workspace. Use this action when you need to retrieve all imports in the authenticated user's personal workspace, including their status, associated datasets, and reports. This is useful for monitoring import operations, checking import completion status, or listing imported content in your workspace. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_IMPORTS_IN_GROUP",
+        "name": "Get Imports in Workspace",
+        "description": "Returns a list of imports from the specified workspace. Use this action when you need to retrieve all imports in a Power BI workspace to monitor import status, list imported datasets and reports, or check for failed imports. This API can be called by a service principal profile with appropriate workspace permissions."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_LINKED_REPORT_HISTORY_SNAPSHOT",
+        "name": "Get Linked Report History Snapshot",
+        "description": "Gets requested HistorySnapshot item specified by HistoryId of the LinkedReport specified by Id. Use this action when you need to retrieve a specific history snapshot for a Power BI LinkedReport. History snapshots capture the state of a report at a particular point in time and can be used for auditing, versioning, or recovery purposes. This is a read-only operation that returns snapshot metadata including creation date, snapshot ID, and size information."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_PAGE",
+        "name": "Get Report Page",
+        "description": "Returns the specified page within the specified report from the specified workspace. Use this action when you need to retrieve details about a specific page within a Power BI report. This is useful for exploring report structure, getting page metadata, or identifying the order of pages in a report. Permissions: This API call can be called by a service principal profile."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_PAGES",
+        "name": "Get Pages from Report",
+        "description": "Returns a list of pages within the specified report from the specified workspace. Use this action when you need to retrieve all pages in a Power BI report to understand the report structure, navigate between pages, or manage report content. This API call can be called by a service principal profile. Required Scope: Report.ReadWrite.All or Report.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_PAGES_IN_MY_WORKSPACE",
+        "name": "Get Pages from Report in My Workspace",
+        "description": "Returns a list of pages within the specified report from My workspace. Use this action when you need to retrieve all pages in a Power BI report that belongs to your personal workspace. This is useful for understanding the report structure, navigating between pages, or managing report content. Required Scope: Report.ReadWrite.All or Report.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_PARAMETERS",
+        "name": "Get Dataset Parameters",
+        "description": "Returns a list of parameters for the specified dataset from **My workspace**. Use this action when you need to retrieve all parameter definitions and their current values for a Power BI dataset, including whether each parameter is required, its data type, and any suggested values. This is useful for auditing dataset configuration, understanding data source connections, or preparing to update parameter values. Required Scope: Dataset.Read"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_PARAMETERS_IN_GROUP2",
+        "name": "Get Dataset Parameters in Workspace",
+        "description": "Returns a list of parameters for the specified dataset from the specified workspace. Use this action when you need to retrieve all parameter definitions and their current values for a Power BI dataset within a specific workspace, including whether each parameter is required, its data type, and any suggested values. This is useful for auditing dataset configuration, understanding data source connections, or preparing to update parameter values in a workspace context. This API call can be called by a service principal profile with appropriate workspace permissions. Required Scope: Dataset.Read.All or Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_QUERY_SCALE_OUT_SYNC_STATUS_2",
+        "name": "Get Query Scale Out Sync Status",
+        "description": "Returns the query scale-out sync status for the specified dataset from the specified workspace. Use this action when you need to check the synchronization status of read-only replicas for a dataset that supports query scale-out. This includes information about commit versions, active read timestamps, and the current sync status. This API call can be called by a service principal profile. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REFRESHABLE_CAPACITY_2",
+        "name": "Get Refreshable For Capacity",
+        "description": "Returns the specified refreshable for the specified capacity that the user has access to. Use this action when you need to retrieve details about a specific refreshable item (dataset) within a capacity, including refresh history, schedules, and status. Power BI retains a seven-day refresh history for each dataset, up to a maximum of sixty refreshes. Required Scope: Capacity.Read.All or Capacity.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REFRESHABLES",
+        "name": "Get refreshables for all capacities",
+        "description": "Returns a list of refreshables for all capacities that the user has access to. Use when you need to retrieve information about datasets and dataflows that have refresh schedules or refresh history across all Power BI capacities. Power BI retains a seven-day refresh history for each dataset, up to a maximum of sixty refreshes. This action is useful for monitoring refresh performance, identifying failed refreshes, and auditing refresh schedules across the organization."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REFRESH_EXECUTION_DETAILS_IN_GROUP",
+        "name": "Get Refresh Execution Details In Group",
+        "description": "Returns execution details of a refresh operation for the specified dataset from the specified workspace. Use this action when you need to retrieve detailed information about a dataset refresh operation within a workspace, including timing, status, errors, and any retry attempts. This is useful for monitoring refresh operations, troubleshooting failed refreshes, and auditing refresh history. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REFRESH_HISTORY",
+        "name": "Get Refresh History for Dataset",
+        "description": "Returns the refresh history for the specified dataset from My workspace. Use when you need to retrieve the refresh history of a specific Power BI dataset to monitor refresh performance, identify failed refreshes, or audit refresh operations. Power BI retains between 20-60 available refresh history entries depending on the number of refreshes in the last 3 days. The most recent 60 entries are kept if they are all less than 3 days old. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All Note: OneDrive refresh history isn't returned by this endpoint."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REFRESH_SCHEDULE",
+        "name": "Get Dataset Refresh Schedule",
+        "description": "Returns the refresh schedule for the specified dataset from My workspace. Use when you need to retrieve the current refresh schedule configuration for a dataset, including the days, times, and notification settings. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REFRESH_SCHEDULE_IN_GROUP2",
+        "name": "Get Refresh Schedule In Group 2",
+        "description": "Returns the refresh schedule for the specified dataset from the specified workspace. Use this action when you need to retrieve the current refresh schedule configuration for a dataset within a specific Power BI workspace, including the days, times, and notification settings. This action is read-only and idempotent. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All Note: This API can be called by a service principal profile."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REPORT3",
+        "name": "Get Report from My Workspace",
+        "description": "Returns the specified report from My workspace. Use this action when you need to retrieve details about a specific Power BI report from your personal workspace, including its metadata, embed URL, ownership information, and associated dataset. Required Scope: Report.ReadWrite.All or Report.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REPORT_PAGE2",
+        "name": "Get Report Page From My Workspace",
+        "description": "Returns the specified page within the specified report from My workspace. Use this action when you need to retrieve details about a specific page within a Power BI report in your personal workspace. This is useful for exploring report structure, getting page metadata, or identifying the order of pages in a report. Required Scope: Report.ReadWrite.All or Report.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REPORTS",
+        "name": "Get Reports",
+        "description": "Gets an array of Report CatalogItems from Power BI. Use this action when you need to retrieve all reports available in the Power BI service. This is useful for browsing the report catalog, finding specific reports, or auditing available resources. The endpoint supports OData query parameters for filtering, sorting, and pagination. Required Scope: Report.Read.All or Report.ReadWrite.All Note: This endpoint uses the v2.0 Power BI Report Server API path."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_REPORTS3",
+        "name": "Get Reports From My Workspace",
+        "description": "Returns a list of reports from My workspace. Use this action when you need to retrieve all reports from your personal Power BI workspace. This also returns shared reports and reports from shared apps. This is useful for exploring your personal workspace contents, finding specific report IDs, or managing report resources. Required Scope: Report.ReadWrite.All or Report.Read.All Note: Service principal authentication isn't supported."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_RESOURCES",
+        "name": "Get Resources",
+        "description": "Gets an array of Resource catalog items. Use this action when you need to retrieve all Power BI resources from the catalog. This is useful for exploring available resources, finding specific resource IDs, or managing resource content. Note: This endpoint uses the Power BI REST API (cloud service)."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_SCORECARD_BY_ID",
+        "name": "Get Scorecard By ID",
+        "description": "Returns a scorecard with the specified ID. Use this action when you need to retrieve details about a specific Power BI scorecard within a workspace, including its goals, metrics, and configuration. This action supports optional OData expansion for including related data like goals, goal values, aggregations, and notes in the response. Required Scope: Dataset.Read.All or Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_SCORECARDS",
+        "name": "Get Scorecards",
+        "description": "Returns a list of scorecards from a workspace. Use this action when you need to retrieve all scorecards within a Power BI workspace. This is useful for exploring workspace goals, finding specific scorecard IDs, or managing scorecard resources. Required Scope: Dataset.Read.All or Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_TABLES",
+        "name": "Get Tables in Dataset",
+        "description": "Returns a list of tables within the specified dataset from My workspace. Use this action when you need to retrieve the schema, columns, measures, and other structural metadata of tables within a Power BI dataset. This is useful for understanding the data model, exploring available fields, or preparing to write DAX expressions. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_TABLES_IN_GROUP",
+        "name": "Get Tables in Dataset within Workspace",
+        "description": "Returns a list of tables within the specified dataset from the specified workspace. Use when you need to retrieve the schema, columns, measures, and other structural metadata of tables within a Power BI dataset in a specific workspace. This is useful for understanding the data model, exploring available fields, or preparing to write DAX expressions. Required Scope: Dataset.ReadWrite.All or Dataset.Read.All Note: This API only supports push datasets."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_TILES2",
+        "name": "Get Tiles from My Workspace Dashboard",
+        "description": "Returns a list of tiles within the specified dashboard from My workspace. Use this action when you need to retrieve all tiles (visualizations) from a specific dashboard in My workspace. Supported tiles include datasets and live tiles that contain an entire report page. This is useful for understanding what content exists in a dashboard or for enumerating dashboard elements. Required Scope: Dashboard.Read.All or Dashboard.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_TILES3",
+        "name": "Get Tiles from Workspace Dashboard",
+        "description": "Returns a list of tiles within the specified dashboard from the specified workspace. Use this action when you need to retrieve all tiles (visualizations) from a specific dashboard within a Power BI workspace. Supported tiles include datasets and live tiles that contain an entire report page. This is useful for understanding what content exists in a dashboard or for enumerating dashboard elements. Required Scope: Dashboard.Read.All or Dashboard.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_GET_WORKSPACE",
+        "name": "Get Workspace",
+        "description": "Returns a specified workspace (group). Use this action when you need to retrieve details about a specific Power BI workspace, including its name, capacity configuration, storage settings, and Log Analytics workspace integration. Permissions: This API call can be called by a service principal profile. Required Scope: Workspace.Read.All or Workspace.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_MICROSOFT_POWER_BI_DATASETS_TRIGGER_QUERY_SCALE_OUT_SYNC_IN_GROUP",
+        "name": "Trigger Query Scale Out Sync in Workspace",
+        "description": "Triggers a query scale-out sync of read-only replicas for the specified dataset from the specified workspace. Use this action when you need to manually synchronize read-only replicas for a dataset in a specific Power BI workspace. This is typically used for maintenance or to ensure all replicas are synchronized before performing administrative operations. The sync operation ensures that read-only replicas have the latest data from the primary dataset. This API call can be called by a service principal profile. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_MOVE_GOALS",
+        "name": "Move Power BI Scorecard Goals",
+        "description": "Moves goals within the scorecard. Changes their ranks and parents. Use when you need to reorganize the goal hierarchy in a Power BI scorecard, such as reordering goals within the same parent, moving a goal to a different parent, or repositioning a goal among its siblings. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_PATCH_GOAL_NOTE",
+        "name": "Patch Goal Note",
+        "description": "Updates a goal value check-in note by ID. Use this action when you need to update the content of an existing goal check-in note in Power BI goals. This action modifies the note body while preserving other note metadata like timestamps and IDs. This is useful for correcting errors, adding additional context, or updating progress notes on goals. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_PATCH_GOAL_VALUE_BY_ID",
+        "name": "Patch Goal Value By ID",
+        "description": "Updates a goal value check-in by a UTC date timestamp. Use this action when you need to update the value, status, target, or other properties of a specific goal value check-in within a Power BI scorecard. This allows you to record progress updates for goals at specific timestamps. Requires the Dataset.ReadWrite.All scope. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_PATCH_SCORECARD_BY_ID",
+        "name": "Patch Scorecard By ID",
+        "description": "Updates a scorecard by its ID. Use this action when you need to modify properties of an existing Power BI scorecard, such as updating its name, description, permissions, or associated settings. This action requires the Dataset.ReadWrite.All scope. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_POST_DATASET_IN_GROUP",
+        "name": "Create Push Dataset in Workspace",
+        "description": "Creates a new push dataset in the specified Power BI workspace. Use this action when you need to create a new push dataset in a specific workspace to store and manage data that can be pushed programmatically via the Power BI REST API. This API call only supports push datasets (Push, Streaming, or PushStreaming mode). This action is irreversible once the dataset is created. The dataset name must be unique within the workspace."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_POST_DATASET_USER",
+        "name": "Grant Dataset User Permissions",
+        "description": "Grants the specified user's permissions to the specified dataset. Use this action when you need to assign access rights to a Power BI dataset for a specific user, group, or app. This is useful for managing dataset permissions and controlling who can access or interact with the dataset. Note: When user permissions to a dataset have been recently updated, the new permissions might not be immediately available."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_POST_DATASET_USER_IN_GROUP",
+        "name": "Grant Dataset User Permissions In Group",
+        "description": "Grants the specified user's permissions to the specified dataset in a workspace. Use this action when you need to assign access rights to a Power BI dataset for a specific user, group, or app within a workspace context. This is useful for managing dataset permissions and controlling who can access or interact with the dataset. Note: When user permissions to a dataset have been recently updated, the new permissions might not be immediately available. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_POST_GOAL",
+        "name": "Post Goal",
+        "description": "Adds a new goal to a Power BI scorecard. Use this action when you need to create a new goal within an existing scorecard to track objectives, KPIs, or other metrics. Goals can be organized in a parent-child hierarchy and support various formatting options for dates and values. Requires the Dataset.ReadWrite.All scope. Note: The goal will be created with default values that may need to be updated via additional API calls for detailed configuration."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_POST_GOAL_NOTE",
+        "name": "Post Goal Note",
+        "description": "Adds a new note to a goal value check-in for a Power BI scorecard goal. Use this action when you need to add a note or comment to a specific goal value check-in within a Power BI scorecard. This allows you to provide additional context or explanations for goal progress updates. The timestamp parameter identifies the specific goal value check-in to attach the note to. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_POST_ROWS_IN_GROUP",
+        "name": "Add Rows to Dataset Table in Workspace",
+        "description": "Adds new data rows to the specified table within the specified dataset from the specified workspace. Use this action when you need to push new data rows into a Power BI push dataset table. This action is idempotent — pushing the same rows multiple times will add duplicate data. The dataset must be a push dataset (Push, Streaming, or PushStreaming mode) with the Add Rows API enabled. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_POST_STATUS_RULES",
+        "name": "Post Goal Status Rules",
+        "description": "Creates or updates status rules of a goal in Power BI. Use this action when you need to define custom status rules that automatically set a goal's status based on conditions such as current value, threshold comparisons, or state values. The defaultOutput is used when no rule conditions are met. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_PUT_TABLE",
+        "name": "Update Table Schema",
+        "description": "Updates the metadata and schema for the specified table within the specified dataset from My workspace. Use this action when you need to modify the schema or metadata of an existing table in a Power BI push dataset. This includes updating columns, adding measures, or changing table properties. The table must already exist in the dataset. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_PUT_TABLE_IN_GROUP",
+        "name": "Update Table Schema in Workspace",
+        "description": "Updates the metadata and schema for the specified table within the specified dataset from the specified workspace. Use this action when you need to modify the schema or metadata of an existing table in a Power BI push dataset within a workspace. This includes updating columns, adding measures, or changing table properties. The table must already exist in the dataset. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_REBIND_REPORT",
+        "name": "Rebind Report to Dataset",
+        "description": "Rebinds the specified report from the specified workspace to the specified dataset. Use this action when you need to change which dataset a Power BI report uses. This is useful for migrating reports to different datasets, connecting reports to updated data sources, or consolidating multiple reports under a single dataset. If the target dataset resides in a different workspace than the report, a shared dataset will be automatically created in the report's workspace. Required Scope: Report.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_REFRESH_DATASET_IN_GROUP",
+        "name": "Trigger Dataset Refresh in Workspace",
+        "description": "Triggers a refresh for the specified dataset from the specified workspace. Use this action when you need to manually trigger a dataset refresh in a Power BI workspace. An enhanced refresh is triggered only if a request payload other than notifyOption is set (e.g., when specifying specific tables, commit mode, or timeout). Note: This action is asynchronous - it initiates the refresh and returns immediately. Use GetRefreshHistory or GetRefreshExecutionDetails to monitor the refresh status. Required Scope: Dataset.ReadWrite.All This action is not destructive - it initiates a refresh operation that can be monitored and cancelled if needed."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_REPORTS_GENERATE_TOKEN_CREATE_IN_GROUP",
+        "name": "Generate Report Embed Token for Create in Group",
+        "description": "Generates an embed token to allow report creation in the specified workspace based on the specified dataset. Use this action when you need to generate an embed token to create a new Power BI report within a specific workspace. The token is based on a dataset and allows programmatic report creation through the Power BI API. You can configure row-level security (RLS) by providing identities, and customize the token lifetime. Required Scope: Report.ReadWrite.All or Report.Read.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_SET_LINKED_REPORT_CACHE_OPTIONS",
+        "name": "Set Linked Report Cache Options",
+        "description": "Replaces the CacheOption's content for a given LinkedReport using the provided definition. Use this action when you need to configure or update the cache settings for a Power BI linked report. This includes setting the execution type (Live, Cache, or Snapshot) and optionally configuring cache expiration. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Report.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_TAKE_OVER_DATASET",
+        "name": "Take Over Dataset",
+        "description": "Transfers ownership over the specified dataset to the current authorized user. Use this action when you need to take over ownership of a dataset in a Power BI workspace. This is useful when the original owner has left the organization or is unavailable, and another user needs to manage the dataset. This API call can be called by a service principal profile. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_TAKE_OVER_REPORT_IN_GROUP",
+        "name": "Take Over Paginated Report Ownership",
+        "description": "Transfers ownership of the data sources for the specified paginated report (RDL) to the current authorized user. Use this action when you need to take ownership of a paginated report's data sources in a Power BI workspace. This is useful when the previous owner is no longer available or you need administrative control over the report's data connections. This operation affects all data sources associated with the report. Required Scope: Report.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_TRIGGER_QUERY_SCALE_OUT_SYNC",
+        "name": "Trigger Query Scale Out Sync",
+        "description": "Triggers a query scale-out sync of read-only replicas for the specified dataset from My workspace. Use this action when you need to manually synchronize read-only replicas for a dataset that supports query scale-out. This is typically used for maintenance or to ensure all replicas are synchronized before performing administrative operations. The sync operation ensures that read-only replicas have the latest data from the primary dataset. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_DATASET",
+        "name": "Update Dataset",
+        "description": "Updates the properties for the specified dataset from My workspace. Use this action when you need to modify dataset settings such as query scale-out configuration or storage mode. The user must be the dataset owner to perform this operation. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_DATASET_IN_GROUP",
+        "name": "Update Dataset In Workspace",
+        "description": "Updates the properties for the specified dataset from the specified workspace. Use this action when you need to modify dataset settings in a workspace, such as configuring query scale-out settings or changing the storage mode. The user must be the dataset owner to perform this operation. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_DATASOURCES3",
+        "name": "Update Paginated Report Data Sources",
+        "description": "Updates the data sources of the specified paginated report (RDL) from the specified workspace. Use this action when you need to update the connection details (server, database) for one or more data sources in a Power BI paginated report within a specific workspace. This is useful for migrating paginated reports between environments (e.g., from development to production) or updating connection strings without republishing the report. [!IMPORTANT] Both the original data source and the new data source must have the exact same schema. Important notes: - Only supports paginated reports (RDL). - Both the original and new data sources must have the exact same schema. - Changing the data source type is not supported. - Open Database Connectivity (ODBC) data sources are not supported. - The user must be the data source owner. Required scope: Reports.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_GOAL_BY_ID",
+        "name": "Patch Goal By ID",
+        "description": "Updates a goal by its ID within a Power BI scorecard. Use this action when you need to modify properties of an existing goal in a Power BI scorecard, such as updating its name, description, dates, permissions, or associated settings. This action requires the Dataset.ReadWrite.All scope. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_PARAMETERS_IN_GROUP2",
+        "name": "Update Dataset Parameters in Workspace",
+        "description": "Updates the parameters values for the specified dataset from the specified workspace. Use this action when you need to change one or more parameter values in a Power BI dataset that resides in a specific workspace. This is commonly used after updating underlying data sources or to modify dataset configuration without redeploying. [!NOTE] We recommend using enhanced dataset metadata with this API call."
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_REFRESH_SCHEDULE",
+        "name": "Update Refresh Schedule",
+        "description": "Updates the refresh schedule for the specified dataset from My workspace. Use this action when you need to configure or modify the automatic refresh schedule for a Power BI dataset, such as enabling/disabling scheduled refresh, setting refresh days and times, or configuring failure notifications. A request that disables the refresh schedule should contain no other changes. This action is idempotent. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_REFRESH_SCHEDULE_IN_GROUP3",
+        "name": "Update Refresh Schedule In Group",
+        "description": "Updates the refresh schedule for the specified dataset from the specified workspace. Use this action when you need to configure or modify the automatic refresh schedule for a Power BI dataset within a workspace, such as enabling/disabling scheduled refresh, setting refresh days and times, or configuring failure notifications. A request that disables the refresh schedule should contain no other changes. This action is idempotent. Required Scope: Dataset.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_REPORT_CONTENT",
+        "name": "Update Report Content",
+        "description": "Updates the content of the specified report from **My workspace** with the content of a specified source report. Use this action when you need to replace the content of a report in My workspace with content from another report. The target report must be in My workspace. The source report can be from My workspace or another workspace (in which case a share is required). This operation overwrites the target report's content while keeping its ID, name, and other properties. Required Scope: Report.ReadWrite.All"
+      },
+      {
+        "slug": "MICROSOFT_POWER_BI_UPDATE_WORKSPACE",
+        "name": "Update Workspace",
+        "description": "Updates the properties for the specified workspace. Use this action when you need to modify workspace settings such as renaming the workspace or changing the default dataset storage format. This action can be called by a service principal profile with appropriate permissions. This action is idempotent - calling it multiple times with the same parameters will have the same effect. Required Scope: Workspace.ReadWrite.All"
+      }
+    ],
+    "triggers": [],
+    "authConfigDetails": [
+      {
+        "mode": "OAUTH2",
+        "name": "microsoft_power_bi_oauth",
+        "fields": {
+          "auth_config_creation": {
+            "required": [
+              {
+                "name": "client_id",
+                "displayName": "Client id",
+                "type": "string",
+                "description": "Client id of the app",
+                "required": true,
+                "default": null
+              },
+              {
+                "name": "client_secret",
+                "displayName": "Client secret",
+                "type": "string",
+                "description": "Client secret of the app",
+                "required": true,
+                "default": null
+              }
+            ],
+            "optional": [
+              {
+                "name": "oauth_redirect_uri",
+                "displayName": "Redirect URI",
+                "type": "string",
+                "description": "Add this Redirect URL to your app's OAuth allow list.",
+                "required": false,
+                "default": "https://backend.composio.dev/api/v1/auth-apps/add"
+              },
+              {
+                "name": "scopes",
+                "displayName": "Scopes",
+                "type": "string",
+                "description": "Scopes to request from the user, comma separated",
+                "required": false,
+                "default": "https://analysis.windows.net/powerbi/api/Dataset.Read.All,https://analysis.windows.net/powerbi/api/Report.Read.All,https://analysis.windows.net/powerbi/api/Dashboard.Read.All,https://analysis.windows.net/powerbi/api/Workspace.Read.All,https://analysis.windows.net/powerbi/api/Content.Create,https://analysis.windows.net/powerbi/api/Dataflow.Read.All,offline_access"
+              }
+            ]
+          },
+          "connected_account_initiation": {
+            "required": [],
+            "optional": []
+          }
+        }
+      }
+    ]
+  },
+  {
     "slug": "minerstat",
     "name": "Minerstat",
     "logo": "https://logos.composio.dev/api/minerstat",
@@ -209016,6 +209777,234 @@
                 "default": null
               }
             ],
+            "optional": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "slug": "neo4j",
+    "name": "Neo4J",
+    "logo": "https://logos.composio.dev/api/neo4j",
+    "description": "Graph database platform for connected data and real-time analytics",
+    "category": "developer tools",
+    "authSchemes": [
+      "OAUTH2",
+      "BASIC",
+      "API_KEY",
+      "S2S_OAUTH2"
+    ],
+    "toolCount": 21,
+    "triggerCount": 0,
+    "version": "00000000_00",
+    "tools": [
+      {
+        "slug": "NEO4J_AGGREGATE_DIRECTORS",
+        "name": "Aggregate Directors Count",
+        "description": "Executes a directorsAggregate GraphQL query to count directors in Neo4j. Use when you need to get the total count of director records in the database. The GraphQL query returns the count of all directors regardless of pagination."
+      },
+      {
+        "slug": "NEO4J_CREATE_INSTANCE_BETA",
+        "name": "Create Neo4j Aura Instance",
+        "description": "Creates a new Neo4j Aura instance with the specified configuration. Use this action when you need to provision a new Neo4j Aura database instance. The operation is asynchronous - the API returns 202 Accepted while the instance is being created in the background. Use this action when you need to create a new Neo4j Aura database instance for your project. The returned credentials (username and password) should be stored securely as they cannot be retrieved again."
+      },
+      {
+        "slug": "NEO4J_CREATE_SNAPSHOT",
+        "name": "Create Neo4j Aura Snapshot",
+        "description": "Create an on-demand snapshot of a Neo4j Aura instance. Triggers asynchronous backup creation and returns a snapshot ID that can be used to monitor progress. Use this action when you need to manually create a backup point before major changes or to preserve the current state of your database. Use this action when you want to create an on-demand backup snapshot of your Neo4j Aura instance before performing risky operations like data migrations, schema changes, or bulk updates."
+      },
+      {
+        "slug": "NEO4J_ESTIMATE_GDS_SESSION_SIZE",
+        "name": "Estimate GDS Session Size",
+        "description": "Estimate the size of a new GDS (Graph Data Science) session based on node/relationship counts and algorithm categories. Use this action when you need to determine the appropriate GDS session size before creating a new graph analytics session. This helps ensure you provision sufficient memory for your graph workloads, particularly useful when planning memory allocation for large-scale graph operations like community detection, pathfinding, or similarity algorithms. The estimation considers the number of nodes, relationships, properties, and intended algorithm categories to provide accurate memory recommendations."
+      },
+      {
+        "slug": "NEO4J_GET_INSTANCE_BETA",
+        "name": "Get Neo4j Aura Instance Details",
+        "description": "Retrieves details for a specific Neo4j Aura instance using its unique instance ID. Returns comprehensive information including instance name, status, cloud provider, region, memory allocation, connection URL, and other configuration details. Use this action when you need to check the status, configuration, or connection details of a specific Neo4j Aura instance. This is a read-only operation that does not modify any instance state."
+      },
+      {
+        "slug": "NEO4J_GET_ORGANIZATION_USER",
+        "name": "Get Neo4j Aura Organization User",
+        "description": "Retrieves details of a specific user in a Neo4j Aura organization. Returns user information including email, organization roles, MFA status, last activity, and project-level access permissions. Use this action when you need to inspect user details, verify organization membership, or check user permissions and access levels within an Aura organization."
+      },
+      {
+        "slug": "NEO4J_GET_PROJECT",
+        "name": "Get Neo4j Aura Project Details",
+        "description": "Retrieve details of a specific Neo4j Aura project (tenant). Returns project information including its ID, name, and available instance configurations with regions, types, memory, storage options, and cloud providers. Use this action when you need to inspect project details or discover available instance configurations before creating a new Aura instance."
+      },
+      {
+        "slug": "NEO4J_GET_PROJECT_BETA",
+        "name": "Get Neo4j Aura Project Details (v1beta5)",
+        "description": "Retrieve details of a specific Neo4j Aura project (tenant) using the v1beta5 API. Returns project information including its ID, name, and available instance configurations with regions, types, memory, storage options, and cloud providers. Use this action when you need to inspect project details or discover available instance configurations before creating a new Aura instance. This uses the v1beta5 API version which may have additional features compared to v1."
+      },
+      {
+        "slug": "NEO4J_GET_SNAPSHOT",
+        "name": "Get Neo4j Aura Snapshot Details",
+        "description": "Retrieves details of a specific snapshot for a Neo4j Aura instance. Returns the snapshot profile, current status, and creation timestamp. Use this action when you need to check the status or details of a particular backup snapshot."
+      },
+      {
+        "slug": "NEO4J_LIST_AGENTS",
+        "name": "List Neo4j Aura Agents",
+        "description": "List all agents belonging to a specific Neo4j Aura project. Returns agent information including ID, name, description, database ID, privacy settings, endpoint links, MCP status, and attached tools. Use this action when you need to retrieve all agents for a specific project to identify available agents or to select a specific agent for subsequent operations."
+      },
+      {
+        "slug": "NEO4J_LIST_GDS_SESSIONS",
+        "name": "List GDS Sessions",
+        "description": "List all Graph Data Science (GDS) sessions for the authenticated Neo4j Aura account. Returns a summary of each GDS session including status, memory allocation, host information, and expiry date. Use optional filters (instanceId, tenantId, organizationId) to narrow down the results to specific instances or organizational units. Use this action when you need to: - Monitor active GDS sessions and their resource usage - Check session expiry dates to plan for renewals - View host connectivity information for GDS sessions - Audit GDS session creation and status across the organization This action is read-only and does not modify any resources."
+      },
+      {
+        "slug": "NEO4J_LIST_INSTANCES_BETA",
+        "name": "List Neo4j Aura Instances",
+        "description": "Returns a list of Neo4j Aura instances. Use when you need to retrieve all available Neo4j Aura instances in your account, optionally filtered by tenant."
+      },
+      {
+        "slug": "NEO4J_LIST_IP_FILTERS",
+        "name": "List IP Filters",
+        "description": "Returns a list of IP filters configured for a Neo4j Aura organization. Use this action when you need to retrieve all IP filters to check which CIDR blocks are allowed or blocked, or to determine which resources are protected by IP filtering."
+      },
+      {
+        "slug": "NEO4J_LIST_PROJECTS",
+        "name": "List Aura Projects",
+        "description": "List all Aura projects (tenants) available to the authenticated user. Returns a summary of each project including its unique ID and name. Use this action when you need to retrieve all Aura projects to identify which projects are accessible or to select a specific project for subsequent operations."
+      },
+      {
+        "slug": "NEO4J_LIST_PROJECT_USERS",
+        "name": "List Project Users",
+        "description": "List all users in a specific Neo4j Aura project. Returns user information including email, user ID, and project roles for each user. Use this action when you need to retrieve all users associated with a project to identify team members or verify user access levels."
+      },
+      {
+        "slug": "NEO4J_LIST_SNAPSHOTS",
+        "name": "List Neo4j Aura Snapshots",
+        "description": "Lists available snapshots for a Neo4j Aura instance. Returns both scheduled and ad-hoc snapshots with their status and creation timestamps. Use when you need to retrieve information about available database backups or recovery points for a specific Aura instance. The date parameter can filter results to a specific day."
+      },
+      {
+        "slug": "NEO4J_PAUSE_INSTANCE_BETA",
+        "name": "Pause Neo4j Aura Instance",
+        "description": "Pauses a Neo4j Aura instance. Use when you need to temporarily stop an instance to reduce costs or perform maintenance. The instance can be resumed later using the ResumeInstance action. This action is asynchronous - the instance will be in a 'pausing' state until the operation completes. Note: this action cannot be performed if an ongoing operation (such as cloning) is in progress on the instance."
+      },
+      {
+        "slug": "NEO4J_RESTORE_SNAPSHOT",
+        "name": "Restore Neo4j Aura Instance from Snapshot",
+        "description": "Restore a Neo4j Aura instance from a snapshot. Replaces all current data with the snapshot data. This action is irreversible — all data since the snapshot was taken will be permanently lost. Use this action when you need to recover an Aura instance to a previous state from a specific snapshot. This operation cannot be undone once initiated."
+      },
+      {
+        "slug": "NEO4J_UPDATE_INSTANCE",
+        "name": "Update Neo4j Aura Instance",
+        "description": "Updates a Neo4j Aura instance configuration. Allows modifying instance properties such as name, memory allocation, storage size, vector optimization, and graph analytics plugin. Use this action when you need to modify an existing Aura instance's settings or resource allocation. Note: Some operations like memory or storage resizing may trigger an asynchronous update process where the instance status changes to 'updating'. Check the instance status after making changes."
+      },
+      {
+        "slug": "NEO4J_UPDATE_INSTANCE_BETA",
+        "name": "Update Neo4j Aura Instance",
+        "description": "Edits the configuration of a Neo4j Aura instance. Allows updating the instance name, memory allocation, storage size, and plugin configurations. Use this action when you need to modify an existing Neo4j Aura instance's settings such as renaming the instance, adjusting memory/storage resources, or enabling/disabling the graph analytics plugin or vector optimization features. Note: Some operations like resizing memory or storage may result in a 202 Accepted response indicating the resize request was accepted for async processing."
+      },
+      {
+        "slug": "NEO4J_UPDATE_IP_FILTER",
+        "name": "Update IP Filter",
+        "description": "Updates an existing IP filter for a Neo4j Aura organization. Use this action when you need to modify an existing IP filter's settings, such as updating its name, description, allow list entries, or enabling/disabling the filter. The request body accepts partial updates - only include the fields you want to modify. This is an idempotent operation that updates the specified properties while preserving all other existing values."
+      }
+    ],
+    "triggers": [],
+    "authConfigDetails": [
+      {
+        "mode": "OAUTH2",
+        "name": "neo4j_oauth",
+        "fields": {
+          "auth_config_creation": {
+            "required": [
+              {
+                "name": "client_id",
+                "displayName": "Client id",
+                "type": "string",
+                "description": "Client id of the app",
+                "required": true,
+                "default": null
+              },
+              {
+                "name": "client_secret",
+                "displayName": "Client secret",
+                "type": "string",
+                "description": "Client secret of the app",
+                "required": true,
+                "default": null
+              }
+            ],
+            "optional": [
+              {
+                "name": "oauth_redirect_uri",
+                "displayName": "Redirect URI",
+                "type": "string",
+                "description": "Add this Redirect URL to your app's OAuth allow list.",
+                "required": false,
+                "default": "https://backend.composio.dev/api/v1/auth-apps/add"
+              },
+              {
+                "name": "scopes",
+                "displayName": "Scopes",
+                "type": "string",
+                "description": "Scopes to request from the user, comma separated",
+                "required": false,
+                "default": ""
+              }
+            ]
+          },
+          "connected_account_initiation": {
+            "required": [],
+            "optional": []
+          }
+        }
+      },
+      {
+        "mode": "API_KEY",
+        "name": "neo4j_bearer",
+        "fields": {
+          "auth_config_creation": {
+            "required": [],
+            "optional": []
+          },
+          "connected_account_initiation": {
+            "required": [
+              {
+                "name": "generic_api_key",
+                "displayName": "Bearer Token",
+                "type": "string",
+                "description": "SSO-generated bearer token for Neo4j database authentication",
+                "required": true,
+                "default": null
+              }
+            ],
+            "optional": []
+          }
+        }
+      },
+      {
+        "mode": "S2S_OAUTH2",
+        "name": "neo4j_s2s_oauth2",
+        "fields": {
+          "auth_config_creation": {
+            "required": [
+              {
+                "name": "client_id",
+                "displayName": "Client ID",
+                "type": "string",
+                "description": "Neo4j Aura API Client ID from Neo4j Aura Console → Account → API Keys (https://console.neo4j.io/).",
+                "required": true,
+                "default": null
+              },
+              {
+                "name": "client_secret",
+                "displayName": "Client Secret",
+                "type": "string",
+                "description": "Neo4j Aura API Client Secret paired with the Client ID above. Shown only once at creation time.",
+                "required": true,
+                "default": null
+              }
+            ],
+            "optional": []
+          },
+          "connected_account_initiation": {
+            "required": [],
             "optional": []
           }
         }
@@ -225822,7 +226811,7 @@
     ],
     "toolCount": 12,
     "triggerCount": 0,
-    "version": "20260506_00",
+    "version": "20260515_00",
     "tools": [
       {
         "slug": "PROCFU_ARRAY_DIFF_DEL",
@@ -233565,7 +234554,7 @@
     ],
     "toolCount": 31,
     "triggerCount": 0,
-    "version": "20260429_00",
+    "version": "20260515_00",
     "tools": [
       {
         "slug": "REPLICATE_ACCOUNT_GET",
@@ -238948,7 +239937,7 @@
     ],
     "toolCount": 6,
     "triggerCount": 0,
-    "version": "20260424_00",
+    "version": "20260513_00",
     "tools": [
       {
         "slug": "SALESMATE_ADD_PRODUCT",
@@ -239003,9 +239992,9 @@
               },
               {
                 "name": "bearer_token",
-                "displayName": "Access Token",
+                "displayName": "Session Token",
                 "type": "string",
-                "description": "The Access Token for authenticating API requests.",
+                "description": "Your Salesmate Session Token. Generate it from your Salesmate account: Profile Icon → Setup → API & Integrations → Session Tokens → Create.",
                 "required": true,
                 "default": null
               }
@@ -252521,7 +253510,7 @@
     ],
     "toolCount": 6,
     "triggerCount": 0,
-    "version": "20260506_00",
+    "version": "20260515_00",
     "tools": [
       {
         "slug": "SUPPORTIVEKOALA_CREATE_IMAGE",
@@ -262057,498 +263046,6 @@
                 "displayName": "Userlist Push API Key",
                 "type": "string",
                 "description": "The Push API key used for authenticating requests to the Userlist API.",
-                "required": true,
-                "default": null
-              }
-            ],
-            "optional": []
-          }
-        }
-      }
-    ]
-  },
-  {
-    "slug": "v0",
-    "name": "V0",
-    "logo": "https://logos.composio.dev/api/v0",
-    "description": "v0 is an AI-powered web development assistant built by Vercel, designed to generate real, production-ready code for modern web applications.",
-    "category": "artificial intelligence",
-    "authSchemes": [
-      "API_KEY"
-    ],
-    "toolCount": 44,
-    "triggerCount": 0,
-    "version": "20260429_00",
-    "tools": [
-      {
-        "slug": "V0_ASSIGN_CHAT_TO_PROJECT",
-        "name": "Assign Chat To Project",
-        "description": "Tool to assign a chat to a project. Use when you need to group a conversation under a shared project context for better organization."
-      },
-      {
-        "slug": "V0_CHAT_COMPLETIONS",
-        "name": "V0 Chat Completions",
-        "description": "Tool to generate a chat model response given a list of messages. Use when you need AI-powered conversational replies via the v0 API. Note: This action uses the POST /chats endpoint which creates a persistent chat session in the user's v0 account. Each call will create a new chat that can be viewed at the returned webUrl or accessed via the apiUrl."
-      },
-      {
-        "slug": "V0_CREATE_HOOK_V0",
-        "name": "Create Webhook",
-        "description": "Tool to create a new webhook subscription for receiving event notifications. Use when you need to listen for chat or message events from v0."
-      },
-      {
-        "slug": "V0_CREATE_PROJECT",
-        "name": "Create V0 Project",
-        "description": "Tool to create a new v0 project container for chats and code generation. Use when you need to start a clean project with specific configuration."
-      },
-      {
-        "slug": "V0_CREATE_PROJECT_ENV_VARS",
-        "name": "Create Project Environment Variables",
-        "description": "Tool to create new environment variables for a v0 project. Use when you need to add environment variables to a project. By default, fails if any keys already exist unless upsert is set to true."
-      },
-      {
-        "slug": "V0_CREATE_VERCEL_PROJECT",
-        "name": "Create Vercel Project",
-        "description": "Tool to link a Vercel project to an existing v0 project. Use when you need to enable Vercel-related features and deployment integration for a v0 project."
-      },
-      {
-        "slug": "V0_DELETE_CHAT",
-        "name": "Delete Chat",
-        "description": "Tool to permanently delete a specific chat by ID. Use when you need to remove a chat and all its contents irreversibly."
-      },
-      {
-        "slug": "V0_DELETE_DEPLOYMENT",
-        "name": "Delete Deployment",
-        "description": "Tool to delete a deployment by ID from Vercel. Use when you need to remove a specific deployment permanently."
-      },
-      {
-        "slug": "V0_DELETE_HOOK",
-        "name": "Delete Hook",
-        "description": "Tool to delete a webhook by its ID. Use when you need to remove a webhook subscription. This action is irreversible."
-      },
-      {
-        "slug": "V0_DELETE_PROJECT_ENV_VARS_V0",
-        "name": "Delete Project Environment Variables",
-        "description": "Tool to delete multiple environment variables from a project by their IDs. Use when you need to remove environment variables from a v0 project."
-      },
-      {
-        "slug": "V0_DELETE_V0_PROJECT",
-        "name": "Delete V0 Project",
-        "description": "Tool to permanently delete a v0 project by its ID. Use when you need to remove a project and optionally all its associated chats. This operation is irreversible."
-      },
-      {
-        "slug": "V0_DEPLOY_PROJECT",
-        "name": "Deploy Project",
-        "description": "Tool to deploy a specific v0 chat version to Vercel. Use when you need to create a live deployment with public URLs after generating code via v0."
-      },
-      {
-        "slug": "V0_DOWNLOAD_CHAT_VERSION",
-        "name": "Download Chat Version",
-        "description": "Tool to download all files for a specific chat version as a zip or tarball archive. Use when you need to retrieve a complete downloadable archive of a version's files, optionally including deployment configuration files."
-      },
-      {
-        "slug": "V0_EXPORT_PROJECT_CODE",
-        "name": "Export Project Code",
-        "description": "Tool to export a deployable snapshot of a v0 chat version by retrieving all files (including default/deployment files). Use when you need to get the complete generated code for a specific version, ready for local deployment or artifact creation."
-      },
-      {
-        "slug": "V0_FAVORITE_CHAT",
-        "name": "Favorite Chat",
-        "description": "Tool to mark a chat as favorite or remove the favorite status. Use when you need to organize and quickly access important chats."
-      },
-      {
-        "slug": "V0_FIND_CHATS",
-        "name": "Find Chats",
-        "description": "Tool to retrieve a list of chats. Use when you need to list user chats with pagination and optional favorite filtering after authentication."
-      },
-      {
-        "slug": "V0_FIND_PROJECTS",
-        "name": "Find Projects",
-        "description": "Tool to retrieve a list of projects associated with the authenticated user. Use after obtaining a valid API key."
-      },
-      {
-        "slug": "V0_FIND_VERCEL_PROJECTS",
-        "name": "Find Vercel Projects",
-        "description": "Tool to retrieve a list of Vercel projects linked to the user's v0 workspace. Use when you need to discover available Vercel projects for deployment or integration purposes."
-      },
-      {
-        "slug": "V0_FORK_CHAT",
-        "name": "Fork Chat",
-        "description": "Tool to create a fork (copy) of an existing chat. Use when you need to explore alternative directions without modifying the original conversation."
-      },
-      {
-        "slug": "V0_GET_CHAT",
-        "name": "Get Chat",
-        "description": "Tool to retrieve the full details of a specific chat using its chatId. Use when you need to access chat messages, metadata, and configuration for a specific chat."
-      },
-      {
-        "slug": "V0_GET_CHAT_PROJECT",
-        "name": "Get Chat Project",
-        "description": "Tool to retrieve the v0 project associated with a given chat. Use when you need to determine the context or scope of a chat session."
-      },
-      {
-        "slug": "V0_GET_DEPLOYMENT_ERRORS",
-        "name": "Get Deployment Errors",
-        "description": "Tool to retrieve errors for a specific deployment. Use when diagnosing and debugging deployment issues."
-      },
-      {
-        "slug": "V0_GET_DEPLOYMENT_LOGS",
-        "name": "Get Deployment Logs",
-        "description": "Tool to retrieve logs for a specific deployment. Use when you need to debug or monitor deployment behavior by fetching log entries, optionally filtered by timestamp."
-      },
-      {
-        "slug": "V0_GET_HOOK",
-        "name": "Get Hook",
-        "description": "Tool to retrieve detailed information about a specific webhook by its ID. Use when you need to inspect webhook configuration, subscribed events, or target URL."
-      },
-      {
-        "slug": "V0_GET_MESSAGE",
-        "name": "Get Chat Message",
-        "description": "Tool to retrieve detailed information about a specific message within a chat. Use when you need to access message content, metadata, attachments, or model configuration for a known message ID."
-      },
-      {
-        "slug": "V0_GET_PROJECT",
-        "name": "Get Project by ID",
-        "description": "Tool to retrieve the details of a specific v0 project by its ID, including associated chats and metadata. Use when you need to inspect project configuration or access related chats."
-      },
-      {
-        "slug": "V0_GET_PROJECT_ENV_VAR",
-        "name": "Get Project Environment Variable",
-        "description": "Tool to retrieve a specific environment variable for a given project by its ID, including its value. Use when you need to get the details of a particular environment variable for a project."
-      },
-      {
-        "slug": "V0_GET_RATE_LIMITS",
-        "name": "Get Rate Limits",
-        "description": "Tool to retrieve the current rate limits for the authenticated user. Use when you need to monitor usage limits and avoid throttling."
-      },
-      {
-        "slug": "V0_GET_USAGE_REPORT_V0",
-        "name": "Get Usage Report",
-        "description": "Tool to retrieve detailed usage events including costs, models used, and metadata. Use when you need to access usage data from the dashboard, filter by chat/user, or analyze costs."
-      },
-      {
-        "slug": "V0_GET_USER",
-        "name": "Get User",
-        "description": "Tool to retrieve the currently authenticated user's information. Use when you need to get the user's ID, name, email, avatar, or account metadata."
-      },
-      {
-        "slug": "V0_GET_USER_BILLING",
-        "name": "Get User Billing",
-        "description": "Tool to fetch billing usage and quota information for the authenticated user. Use when you need to check the user's billing details or usage metrics. Can be scoped to a specific project or namespace."
-      },
-      {
-        "slug": "V0_GET_USER_PLAN_V0",
-        "name": "Get User Plan",
-        "description": "Tool to retrieve the authenticated user's subscription plan details including billing cycle and balance. Use to check plan status and usage limits."
-      },
-      {
-        "slug": "V0_GET_USER_SCOPES",
-        "name": "Get User Scopes",
-        "description": "Tool to retrieve all accessible scopes for the authenticated user, such as personal workspaces or shared teams. Use when you need to understand which workspaces the user can access."
-      },
-      {
-        "slug": "V0_INIT_V0_CHAT",
-        "name": "Initialize Chat",
-        "description": "Tool to initialize a new chat from source content such as files, repositories, registries, zip archives, or templates. Use when you need to start a new v0 chat session with pre-populated content. Initialization uses no tokens."
-      },
-      {
-        "slug": "V0_LIST_CHAT_VERSIONS",
-        "name": "List Chat Versions",
-        "description": "Tool to retrieve all versions (iterations) for a specific chat, ordered by creation date (newest first). Use when you need to view the history of a chat's generated versions with cursor-based pagination support."
-      },
-      {
-        "slug": "V0_LIST_DEPLOYMENTS",
-        "name": "List Deployments",
-        "description": "Tool to retrieve a list of deployments for a given project, chat, and version. Use when you need to check existing deployments for specific project versions."
-      },
-      {
-        "slug": "V0_LIST_HOOKS",
-        "name": "List Hooks",
-        "description": "Tool to retrieve all webhooks tied to chat events or deployments. Use when you need to list configured webhooks after authentication."
-      },
-      {
-        "slug": "V0_LIST_MESSAGES",
-        "name": "List Messages",
-        "description": "Tool to retrieve all messages within a specific chat. Use when you need to list messages with content, role, and type information. Supports pagination for chats with many messages."
-      },
-      {
-        "slug": "V0_LIST_PROJECT_ENV_VARS",
-        "name": "List Project Environment Variables",
-        "description": "Tool to retrieve all environment variables for a project with optional decryption. Use when you need to view project configuration or secrets."
-      },
-      {
-        "slug": "V0_UPDATE_CHAT",
-        "name": "Update Chat",
-        "description": "Tool to update metadata of an existing v0 chat. Use when you need to rename a chat or change its privacy setting after creation."
-      },
-      {
-        "slug": "V0_UPDATE_CHAT_VERSION",
-        "name": "Update Chat Version Files",
-        "description": "Tool to update source files of a specific chat version. Use when you need to manually edit generated files through the API."
-      },
-      {
-        "slug": "V0_UPDATE_HOOK",
-        "name": "Update V0 Webhook",
-        "description": "Tool to update the configuration of an existing webhook, including its name, event subscriptions, or target URL. Use when you need to modify webhook settings after creation."
-      },
-      {
-        "slug": "V0_UPDATE_PROJECT",
-        "name": "Update V0 Project",
-        "description": "Tool to update the metadata of an existing v0 project using its projectId. Use when you need to change the project name, description, instructions, or privacy setting."
-      },
-      {
-        "slug": "V0_UPDATE_PROJECT_ENV_VARS",
-        "name": "Update Project Environment Variables",
-        "description": "Tool to update environment variables for a v0 project. Use when you need to modify the values of existing environment variables."
-      }
-    ],
-    "triggers": [],
-    "authConfigDetails": [
-      {
-        "mode": "API_KEY",
-        "name": "v0_api_key",
-        "fields": {
-          "auth_config_creation": {
-            "required": [],
-            "optional": []
-          },
-          "connected_account_initiation": {
-            "required": [
-              {
-                "name": "generic_api_key",
-                "displayName": "v0 API Key",
-                "type": "string",
-                "description": "Your v0 API key, obtainable from your v0 account settings at https://v0.dev/chat/settings/keys",
-                "required": true,
-                "default": null
-              }
-            ],
-            "optional": []
-          }
-        }
-      }
-    ]
-  },
-  {
-    "slug": "vapi",
-    "name": "Vapi",
-    "logo": "https://logos.composio.dev/api/vapi",
-    "description": "Vapi is a voice AI platform that enables developers to build, test, and deploy voice agents with natural conversations, real-time responses, and seamless integration capabilities.",
-    "category": "artificial intelligence",
-    "authSchemes": [
-      "API_KEY"
-    ],
-    "toolCount": 38,
-    "triggerCount": 0,
-    "version": "20260429_00",
-    "tools": [
-      {
-        "slug": "VAPI_ASSISTANT_CONTROLLER_UPDATE",
-        "name": "Update Assistant",
-        "description": "Tool to update an existing Vapi assistant configuration. Use when you need to modify assistant properties such as name, voice settings, transcriber configuration, model settings, messages, or other behavior parameters. Only include fields you want to update."
-      },
-      {
-        "slug": "VAPI_CALL_CONTROLLER_FIND_ALL",
-        "name": "List Calls",
-        "description": "Tool to list calls from Vapi. Use when you need to retrieve multiple calls with optional filtering by id, assistantId, phoneNumberId, or date ranges. Returns an array of call objects with details including status, costs, messages, and artifacts."
-      },
-      {
-        "slug": "VAPI_CHAT_CONTROLLER_DELETE_CHAT",
-        "name": "Delete Chat",
-        "description": "Tool to delete a chat by its ID from Vapi. Use when you need to permanently remove a chat conversation."
-      },
-      {
-        "slug": "VAPI_CHAT_CONTROLLER_GET_CHAT",
-        "name": "Get Chat",
-        "description": "Tool to fetch chat details by ID. Use when you have a chat ID and need full chat information including messages, costs, and configuration."
-      },
-      {
-        "slug": "VAPI_CREATE_ANALYTICS_QUERY",
-        "name": "Create Analytics Queries",
-        "description": "Tool to create and execute analytics queries on VAPI data. Use when you need to analyze call or subscription metrics with aggregations like count, sum, average, min, or max. Supports grouping by various dimensions and time-based analysis with custom time ranges."
-      },
-      {
-        "slug": "VAPI_CREATE_ASSISTANT",
-        "name": "Create Assistant",
-        "description": "Tool to create a new Vapi assistant with specified transcriber, voice, and AI model configurations. Use when setting up a conversational AI assistant for voice interactions. The assistant requires transcription (speech-to-text), voice (text-to-speech), and AI model (conversation logic) configurations at minimum."
-      },
-      {
-        "slug": "VAPI_CREATE_EVAL",
-        "name": "Create Eval",
-        "description": "Tool to create an eval for testing conversation flows. Use when you need to validate that an AI assistant responds correctly to specific conversation scenarios."
-      },
-      {
-        "slug": "VAPI_CREATE_OPEN_AI_CHAT",
-        "name": "Create OpenAI Chat",
-        "description": "Tool to create an OpenAI-compatible chat using the Vapi API. Use when you need to send a chat message to an assistant or squad and receive a response. Supports both streaming and non-streaming modes."
-      },
-      {
-        "slug": "VAPI_CREATE_POLICY",
-        "name": "Create Monitoring Policy",
-        "description": "Tool to create a monitoring policy in VAPI. Use when you need to set up automated monitoring rules based on thresholds and time windows. Policies can trigger alerts based on event counts or percentages over a specified lookback window."
-      },
-      {
-        "slug": "VAPI_CREATE_PROVIDER_RESOURCE",
-        "name": "Create Provider Resource",
-        "description": "Tool to create an 11Labs pronunciation dictionary resource. Use when you need to define custom pronunciations for specific terms or acronyms in voice synthesis."
-      },
-      {
-        "slug": "VAPI_CREATE_SCORECARD",
-        "name": "Create Scorecard",
-        "description": "Tool to create a scorecard for observability and evaluation. Use when setting up metrics to evaluate assistant performance based on structured outputs. Scorecards contain metrics with conditions that calculate normalized scores on a 100-point scale."
-      },
-      {
-        "slug": "VAPI_DELETE_CALL",
-        "name": "Delete Call",
-        "description": "Tool to delete a call by its unique identifier. Use when you need to remove call data from the system. Returns the deleted call object with all its associated data."
-      },
-      {
-        "slug": "VAPI_DELETE_EVAL",
-        "name": "Delete Eval",
-        "description": "Tool to delete an eval by ID. Use when you need to permanently remove an eval from the system."
-      },
-      {
-        "slug": "VAPI_DELETE_PHONE_NUMBER",
-        "name": "Delete Phone Number",
-        "description": "Tool to delete a phone number from Vapi. Use when you need to remove a phone number from your Vapi organization. Returns the deleted phone number object."
-      },
-      {
-        "slug": "VAPI_EVAL_CONTROLLER_GET",
-        "name": "Get Eval",
-        "description": "Tool to retrieve an eval by its ID. Use when you need to fetch details about a specific eval including its mock conversation messages and metadata."
-      },
-      {
-        "slug": "VAPI_EVAL_CONTROLLER_REMOVE_RUN",
-        "name": "Delete Eval Run",
-        "description": "Tool to delete an eval run by its ID from Vapi. Use when you need to permanently remove an evaluation run."
-      },
-      {
-        "slug": "VAPI_EVAL_CONTROLLER_UPDATE",
-        "name": "Update Eval",
-        "description": "Tool to update an existing eval in Vapi. Use when you need to modify eval properties like name, description, type, or mock conversation messages."
-      },
-      {
-        "slug": "VAPI_GET_ASSISTANT",
-        "name": "Get Assistant",
-        "description": "Tool to retrieve a specific assistant by ID from Vapi. Use when you need to fetch details about an existing assistant."
-      },
-      {
-        "slug": "VAPI_GET_CALL",
-        "name": "Get Call",
-        "description": "Tool to fetch call details by ID. Use when you have a call ID and need full call information including status, duration, costs, messages, and recordings."
-      },
-      {
-        "slug": "VAPI_GET_FILE",
-        "name": "Get File",
-        "description": "Tool to retrieve a file by its ID from Vapi. Use when you need to get details about a specific file including its status, metadata, storage location, and timestamps."
-      },
-      {
-        "slug": "VAPI_GET_MONITORING",
-        "name": "List Monitoring Policies",
-        "description": "Tool to retrieve monitoring policies from Vapi. Use when you need to list, filter, or search for monitoring policies configured in the organization. Supports filtering by policy ID, severity level, monitor ID, and date ranges for creation/update timestamps."
-      },
-      {
-        "slug": "VAPI_GET_STRUCTURED_OUTPUTS",
-        "name": "List Structured Outputs",
-        "description": "Tool to list structured outputs with optional filtering. Use when you need to retrieve structured output configurations with pagination support. Supports filtering by ID, name, timestamps, and includes pagination controls."
-      },
-      {
-        "slug": "VAPI_INSIGHT_CONTROLLER_FIND_ALL",
-        "name": "Get Insights",
-        "description": "Tool to retrieve insights from VAPI. Use when you need to list insights with optional filtering by ID, creation date, or update date. Supports pagination and sorting."
-      },
-      {
-        "slug": "VAPI_LIST_ASSISTANTS",
-        "name": "List Assistants",
-        "description": "Tool to list all assistants in your VAPI organization. Use when you need to retrieve information about configured assistants. Supports filtering by creation and update timestamps."
-      },
-      {
-        "slug": "VAPI_LIST_CHATS",
-        "name": "List Chats",
-        "description": "Tool to retrieve a list of chat conversations from VAPI. Use when you need to view existing chats, optionally filtered by assistant, squad, session, or time range. Supports pagination and sorting for efficient retrieval of large chat histories."
-      },
-      {
-        "slug": "VAPI_LIST_EVALS",
-        "name": "List Evals",
-        "description": "Tool to retrieve a paginated list of evals from Vapi. Use when you need to list or search evals with optional filtering by creation/update timestamps."
-      },
-      {
-        "slug": "VAPI_LIST_PHONE_NUMBERS",
-        "name": "List Phone Numbers",
-        "description": "Tool to list phone numbers in the Vapi organization. Use when you need to enumerate available phone numbers for routing or selection workflows. Supports filtering by creation and update timestamps."
-      },
-      {
-        "slug": "VAPI_LIST_PROVIDER_RESOURCES",
-        "name": "List Provider Resources",
-        "description": "Tool to retrieve provider resources from Vapi (e.g., 11labs pronunciation dictionaries). Use when you need to list or search provider-specific resources with optional filtering by timestamps."
-      },
-      {
-        "slug": "VAPI_PATCH_INSIGHT_INSIGHT",
-        "name": "Update Insight",
-        "description": "Tool to update an existing insight configuration in VAPI. Use when you need to modify insight properties like name, queries, time range, or visualization settings. Supports all four insight types (bar, pie, line, text) with type-specific configurations."
-      },
-      {
-        "slug": "VAPI_PHONE_NUMBER_CONTROLLER_CREATE",
-        "name": "Create Phone Number",
-        "description": "Tool to create a phone number with VAPI. Use when you need to provision a new phone number for voice AI applications. Supports multiple providers (VAPI, Twilio, Vonage, Telnyx, BYO). Required parameters vary by provider."
-      },
-      {
-        "slug": "VAPI_SCORECARD_CONTROLLER_GET_PAGINATED",
-        "name": "List Scorecards",
-        "description": "Tool to retrieve a paginated list of scorecards from Vapi. Use when you need to list or search scorecards with optional filtering by creation/update timestamps."
-      },
-      {
-        "slug": "VAPI_SESSION_CONTROLLER_CREATE",
-        "name": "Create Session",
-        "description": "Tool to create a new session in Vapi. Use when you need to establish a persistent conversation context that can span multiple chats. Sessions automatically expire after 24 hours."
-      },
-      {
-        "slug": "VAPI_SESSION_CONTROLLER_FIND_ALL_PAGINATED",
-        "name": "List Sessions",
-        "description": "Tool to retrieve a paginated list of sessions from VAPI. Use when you need to list sessions with optional filtering by session ID, name, assistant, squad, or workflow. Supports pagination, sorting, and timestamp-based filtering."
-      },
-      {
-        "slug": "VAPI_TOOL_CONTROLLER_FIND_ONE",
-        "name": "Get Tool",
-        "description": "Tool to fetch tool details by ID. Use when you have a tool ID and need full tool configuration including type, messages, function definitions, and server settings."
-      },
-      {
-        "slug": "VAPI_TOOL_CONTROLLER_TEST_CODE_EXECUTION",
-        "name": "Test Code Tool Execution",
-        "description": "Tool to test TypeScript code execution in Vapi's code tool environment. Use when validating code before deploying it as a tool."
-      },
-      {
-        "slug": "VAPI_TOOL_CONTROLLER_UPDATE",
-        "name": "Update Tool",
-        "description": "Tool to update an existing Vapi tool configuration. Use when you need to modify tool properties such as function definitions, server settings, messages, or other tool-specific parameters."
-      },
-      {
-        "slug": "VAPI_UPDATE_PHONE_NUMBER",
-        "name": "Update Phone Number",
-        "description": "Tool to update an existing phone number configuration in VAPI. Use when you need to modify phone number settings such as name, associated assistant/workflow, or provider-specific configurations."
-      },
-      {
-        "slug": "VAPI_UPLOAD_FILE",
-        "name": "Upload File",
-        "description": "Tool to upload a file to Vapi Knowledge Base. Use when you need to add files for AI assistants to reference. Returns file metadata including ID, storage URLs, and processing status."
-      }
-    ],
-    "triggers": [],
-    "authConfigDetails": [
-      {
-        "mode": "API_KEY",
-        "name": "vapi_api_key",
-        "fields": {
-          "auth_config_creation": {
-            "required": [],
-            "optional": []
-          },
-          "connected_account_initiation": {
-            "required": [
-              {
-                "name": "generic_api_key",
-                "displayName": "Private API Key",
-                "type": "string",
-                "description": "Your Vapi private API key. Get it from dashboard.vapi.ai. Use private key (UUID format) for server-side endpoints, not public key (pbk_live_...).",
                 "required": true,
                 "default": null
               }
